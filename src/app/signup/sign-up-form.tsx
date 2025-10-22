@@ -10,6 +10,9 @@ import { signUp } from './actions';
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spinner } from '@/components/ui/spinner';
+import { toast } from 'sonner';
+import { setCookie } from '../actions/cookieActions';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   projectName: z.string().min(1, 'Please enter project name'),
@@ -19,6 +22,7 @@ const schema = z.object({
 })
 
 export default function SignUpForm() {
+  const router = useRouter();
   const form = useForm({
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -28,10 +32,20 @@ export default function SignUpForm() {
       email: "",
       password: ""
     },
-  })
+  });
 
   const handleSubmit = async (values) => {
-    await signUp(values)
+    try {
+      const response = await signUp(values);
+      toast.success(`${values.projectName} has been created.`)
+
+      const data = await response.json();
+
+      setCookie('token', data.access_token)
+      router.replace('/')
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.')
+    }
   }
 
   return (
@@ -116,6 +130,7 @@ export default function SignUpForm() {
                     </FieldLabel>
                     <Input
                       {...field}
+                      type='password'
                       placeholder='Enter user password'
                     />
                     {fieldState.invalid && (
