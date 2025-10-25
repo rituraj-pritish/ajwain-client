@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,8 +11,10 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spinner } from '@/components/ui/spinner';
 import { toast } from 'sonner';
-import { setCookie } from '../actions/cookieActions';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Logo from '../logo';
+import ThemeToggle from '../theme-toggle';
 
 const schema = z.object({
   projectName: z.string().min(1, 'Please enter project name'),
@@ -38,19 +40,20 @@ export default function SignUpForm() {
     try {
       const response = await signUp(values);
       toast.success(`${values.projectName} has been created.`)
-
-      const data = await response.json();
-
-      setCookie('token', data.access_token)
-      router.replace('/')
+      router.replace('/dashboard')
     } catch (error) {
       toast.error('Something went wrong. Please try again.')
     }
   }
 
   return (
+    <div className='relative mt-16'>
+      <Logo/>
+      <span className='absolute right-[calc(50vw-182px)] top-0'>
+        <ThemeToggle/>
+      </span>
     <form id='sign-up-form' onSubmit={form.handleSubmit(handleSubmit)}>
-      <Card className='w-md mx-auto px-4 py-8 mt-16'>
+      <Card className='w-md mx-auto px-4 py-8 mt-6'>
         <CardHeader>
           <CardTitle className='mx-auto'>
             Get Started With Your Project
@@ -147,8 +150,12 @@ export default function SignUpForm() {
             {form.formState.isSubmitting && <Spinner/>}
             Create Project
           </Button>
+          <FieldDescription className="px-6 pt-6 text-center">
+              Already have an account? <Link href="/signin">Sign in</Link>
+          </FieldDescription>
         </CardFooter>
       </Card>
     </form>
+    </div>
   )
 }
