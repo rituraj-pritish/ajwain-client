@@ -1,22 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
-const protectedRoutes = ['/dashboard'];
+const protectedRoutes = ['/project']
 
 export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
+  const path = req.nextUrl.pathname
+  const isProtectedRoute = protectedRoutes.includes(path)
 
-  const cookie = await cookies();
-  const auth = cookie.get("token");
+  const cookie = await cookies()
+  const auth = cookie.get('token')
 
   if (isProtectedRoute && !auth) {
-    return NextResponse.redirect(new URL("/signin", req.nextUrl));
+    return NextResponse.redirect(new URL('/signin', req.nextUrl))
   }
 
-  if (auth && ["/signin", '/signup'].includes(path)) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  if (auth && ['/', '/signin', '/signup'].includes(path)) {
+    return NextResponse.redirect(new URL('/project', req.nextUrl))
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }

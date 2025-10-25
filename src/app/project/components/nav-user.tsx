@@ -23,7 +23,7 @@ import { getInitials } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import useTheme, { Theme } from '@/hooks/use-theme'
-import { logout } from './actions/clientActions'
+import { logout } from '../actions/clientActions'
 
 interface Props {
   user: User
@@ -55,7 +55,7 @@ export function NavUser({ user }: Props) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">
-                  {getInitials(user.name)}
+                  {user.name && getInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">

@@ -1,0 +1,70 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { deleteWorkspace } from '../actions/clientActions'
+import { Spinner } from '@/components/ui/spinner'
+import { useRouter } from 'next/navigation'
+import Workspace from '@/types/workspace.interface'
+
+interface Props {
+  workspace: Workspace | null
+  isOpen: boolean
+  onOpenChange: (state: boolean) => void
+}
+
+export default function DeleteWorkspaceAlertDialog({
+  workspace,
+  isOpen,
+  onOpenChange,
+}: Props) {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleDelete = async () => {
+    setIsLoading(true)
+    try {
+      await deleteWorkspace({
+        id: workspace?.id,
+      })
+      onOpenChange(false)
+      router.refresh()
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Delete Workspace "{workspace?.name}"?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this
+            workspace and remove data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
+            {isLoading && <Spinner />}
+            Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}

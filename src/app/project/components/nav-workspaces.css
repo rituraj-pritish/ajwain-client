@@ -1,0 +1,11 @@
+.menu-item {
+  .menu-trigger {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .menu-trigger {
+      visibility: visible;
+    }
+  }
+}
