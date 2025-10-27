@@ -33,6 +33,7 @@ import {
 import DeleteWorkspaceAlertDialog from './delete-workspace-alert-dialog'
 import './nav-workspaces.css'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 interface Props {
   workspaces: Workspace[]
@@ -47,8 +48,9 @@ export default function NavWorkspaces({ workspaces }: Props) {
 
   const items = workspaces?.map(({ id, name }) => ({
     id,
-    title: name,
-    url: `project/workspace/${id}`,
+    name,
+    url: `/project/workspace/${id}`,
+    isActive: pathName === `/project/workspace/${id}`,
     items: [],
   }))
 
@@ -68,12 +70,12 @@ export default function NavWorkspaces({ workspaces }: Props) {
         </SidebarGroupAction>
         <SidebarMenu>
           {items?.map((item) => (
-            <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+            <Collapsible key={item.name} asChild defaultOpen={item.isActive}>
               <SidebarMenuItem className="menu-item">
-                <SidebarMenuButton asChild tooltip={item.title}>
-                  <a href={item.url}>
-                    <span>{item.title}</span>
-                  </a>
+                <SidebarMenuButton asChild tooltip={item.name} isActive={item.isActive}>
+                  <Link href={item.url}>
+                    <span>{item.name}</span>
+                  </Link>
                 </SidebarMenuButton>
 
                 <DropdownMenu>
@@ -105,10 +107,10 @@ export default function NavWorkspaces({ workspaces }: Props) {
                     <CollapsibleContent>
                       <SidebarMenuSub>
                         {item.items?.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubItem key={subItem.name}>
                             <SidebarMenuSubButton asChild>
                               <a href={subItem.url}>
-                                <span>{subItem.title}</span>
+                                <span>{subItem.name}</span>
                               </a>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>

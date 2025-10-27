@@ -57,9 +57,9 @@ export async function deleteWorkspace(body) {
 export async function getWorkspace(body) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/create',
+      process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/details',
       {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

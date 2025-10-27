@@ -68,46 +68,42 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <form id="create-workspace">
-        <div className="max-w-400px">
-          <SheetContent side="bottom">
-            <SheetHeader>
-              <SheetTitle>Create Workspace</SheetTitle>
-            </SheetHeader>
-            <FieldGroup className="px-4 w-[400px]">
-              <Controller
-                name="name"
-                control={form.control}
-                render={({ field, fieldState }) => {
-                  return (
-                    <Field>
-                      <FieldLabel>Name</FieldLabel>
-                      <Input {...field} placeholder="Enter workspace name" />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )
-                }}
-              />
-            </FieldGroup>
-            <SheetFooter className="flex-row justify-end">
-              <Button
-                type="submit"
-                id="create-workspace"
-                disabled={
-                  !form.formState.isValid || form.formState.isSubmitting
-                }
-                onClick={form.handleSubmit(handleSubmit)}
-              >
-                {form.formState.isSubmitting && <Spinner />}
-                Create Workspace
-              </Button>
-              <SheetClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </SheetClose>
-            </SheetFooter>
-          </SheetContent>
-        </div>
+        <SheetContent side="bottom">
+          <SheetHeader>
+            <SheetTitle>Create Workspace</SheetTitle>
+          </SheetHeader>
+          <FieldGroup className="px-4 w-[400px]">
+            <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Field>
+                    <FieldLabel>Name</FieldLabel>
+                    <Input {...field} placeholder="Enter workspace name" />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )
+              }}
+            />
+          </FieldGroup>
+          <SheetFooter className="flex-row justify-end">
+            <Button
+              type="submit"
+              id="create-workspace"
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
+              onClick={form.handleSubmit(handleSubmit)}
+            >
+              {form.formState.isSubmitting && <Spinner />}
+              Create Workspace
+            </Button>
+            <SheetClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
       </form>
     </Sheet>
   )

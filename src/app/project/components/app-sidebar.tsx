@@ -14,6 +14,7 @@ import Project from '@/types/project.interface'
 import User from '@/types/user.interface'
 import NavWorkspaces from './nav-workspaces'
 import { NavUser } from './nav-user'
+import NavSecondary from './nav-secondary'
 
 interface Props {
   project: Project
@@ -39,6 +40,7 @@ export default function AppSidebar({ project, user }: Props) {
       </SidebarHeader>
       <SidebarContent>
         <NavWorkspaces workspaces={project.workspaces} />
+        <NavSecondary/>
       </SidebarContent>
       <SidebarFooter className="my-2">
         <NavUser user={user} />

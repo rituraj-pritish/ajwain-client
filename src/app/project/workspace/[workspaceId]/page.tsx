@@ -1,3 +1,12 @@
+import BreadcrumbsHeader from '../../components/breadcrumbs';
+import Header from '../../components/header';
+
 export default function Page({ params }) {
-  return 'workspace' + params.workspaceId
+  return (
+    <>
+      <Header>
+        <BreadcrumbsHeader />
+      </Header>
+    </>
+  )
 }
