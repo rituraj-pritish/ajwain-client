@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/tooltip'
 import Workspace from '@/types/workspace.interface'
 import { ChevronRight, MoreHorizontal, Plus } from 'lucide-react'
-import AddWorkspace from './add-workspace'
+import AddWorkspace from './create-workspace'
 import { useState } from 'react'
 import {
   DropdownMenu,

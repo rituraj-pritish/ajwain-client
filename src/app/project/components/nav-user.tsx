@@ -22,8 +22,8 @@ import User from '@/types/user.interface'
 import { getInitials } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import useTheme, { Theme } from '@/hooks/use-theme'
 import { logout } from '../actions/clientActions'
+import { useTheme } from 'next-themes'
 
 interface Props {
   user: User
@@ -32,7 +32,7 @@ interface Props {
 export function NavUser({ user }: Props) {
   const { isMobile } = useSidebar()
   const router = useRouter()
-  const { theme, toggleTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   const handleLogout = async () => {
     try {
@@ -72,9 +72,11 @@ export function NavUser({ user }: Props) {
             sideOffset={4}
           >
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={toggleTheme}>
-                {theme === Theme.DARK ? <Sun /> : <Moon />}
-                {theme === Theme.DARK ? 'Light' : 'Dark'} Theme
+              <DropdownMenuItem
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              >
+                {theme === 'dark' ? <Sun /> : <Moon />}
+                {theme === 'dark' ? 'Light' : 'Dark'} Theme
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

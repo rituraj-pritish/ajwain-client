@@ -14,7 +14,7 @@ export default async function Page() {
         <Breadcrumbs />
       </Header>
       <div className="container mx-auto p-4">
-        <div className='mb-4 flex justify-end'>
+        <div className="mb-4 flex justify-end">
           <CreateMember />
         </div>
         <MembersTable data={data} />

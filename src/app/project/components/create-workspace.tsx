@@ -72,7 +72,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
           <SheetHeader>
             <SheetTitle>Create Workspace</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 w-[400px]">
+          <FieldGroup className="px-4 grid grid-cols-3 gap-4">
             <Controller
               name="name"
               control={form.control}

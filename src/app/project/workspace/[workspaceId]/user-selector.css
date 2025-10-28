@@ -1,0 +1,11 @@
+.avatar {
+  .remove-avatar {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .remove-avatar {
+      visibility: visible;
+    }
+  }
+}

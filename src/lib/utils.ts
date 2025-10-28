@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function getInitials(str: string) {
   return str
     .split(' ')
-    .slice(0, 1)
+    .slice(0, 2)
     .map((item) => item.charAt(0))
     .join('')
 }
