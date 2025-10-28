@@ -30,6 +30,10 @@ interface User {
   name: string
 }
 
+interface Props {
+  onChange: (users: User[]) => void
+}
+
 const USERS: User[] = [
   {
     id: 1,
@@ -45,7 +49,7 @@ const USERS: User[] = [
   },
 ]
 
-export default function UserSelector({ onChange }) {
+export default function UserSelector({ onChange }: Props) {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([])
 
   const handleSelect = (user: User) => {
@@ -69,8 +73,9 @@ export default function UserSelector({ onChange }) {
           <Button
             variant="outline"
             role="combobox"
-            className="justify-between h-[50px]"
+            className="justify-between h-[50px] w-full"
           >
+            Select members
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-1 *:data-[slot=avatar]:ring-2">
               {selectedUsers.map(({ id, name }) => {
                 return (
@@ -100,7 +105,6 @@ export default function UserSelector({ onChange }) {
                 )
               })}
             </div>
-            Select members...
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>

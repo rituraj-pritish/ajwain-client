@@ -35,7 +35,7 @@ import {
 
 interface Props {}
 
-const schema = z.object({
+export const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
   email: z.email('Please enter valid email'),
   password: z.string().min(6, 'Minimum 6 characters long'),
@@ -57,7 +57,7 @@ export default function CreateMember(props: Props) {
     },
   })
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
       const response = await createMember(values)
       const data = await response.json()

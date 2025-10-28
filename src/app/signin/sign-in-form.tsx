@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '../components/logo'
 
-const schema = z.object({
+export const schema = z.object({
   email: z.email('Please enter a valid email'),
   password: z.string().min(6, 'Password must be at least 6 characters long'),
 })
@@ -42,7 +42,7 @@ export default function SignInForm() {
     },
   })
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
       const response = await signIn(values)
       toast.success('Sign In successfull')

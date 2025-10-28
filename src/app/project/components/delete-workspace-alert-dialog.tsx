@@ -7,17 +7,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { deleteWorkspace } from '../actions/clientActions'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
-import Workspace from '@/types/workspace.interface'
+import { Item } from './nav-workspaces'
 
 interface Props {
-  workspace: Workspace | null
+  workspace: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }
@@ -34,7 +33,7 @@ export default function DeleteWorkspaceAlertDialog({
     setIsLoading(true)
     try {
       await deleteWorkspace({
-        id: workspace?.id,
+        id: workspace!?.id,
       })
       onOpenChange(false)
       router.refresh()

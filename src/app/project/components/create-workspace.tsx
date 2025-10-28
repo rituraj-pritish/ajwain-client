@@ -24,7 +24,7 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   isOpen: boolean
-  onOpenChange: (state: boolean) => boolean
+  onOpenChange: (state: boolean) => void
 }
 
 const schema = z.object({
@@ -41,7 +41,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
     },
   })
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
       const response = await createWorkspace(values)
       const data = await response.json()
@@ -50,7 +50,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
       router.refresh()
       onOpenChange(false)
       toast.success(`${values.name} created successfully.`)
-    } catch (error) {
+    } catch (error: any) {
       if (error.message) {
         return form.setError('name', {
           message: error.message,

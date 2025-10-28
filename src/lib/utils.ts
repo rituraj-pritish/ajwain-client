@@ -18,3 +18,8 @@ export function snakeCaseToString(snakeCaseString: string) {
 
   return spacedString
 }
+
+export function toSentenceCase(str: string) {
+  const lowerStr = str.toLowerCase()
+  return lowerStr.charAt(0).toUpperCase() + lowerStr.slice(1)
+}

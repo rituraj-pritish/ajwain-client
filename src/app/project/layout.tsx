@@ -1,15 +1,12 @@
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { getProjectDetails, getUserDetails } from './actions/serverActions'
 import AppSidebar from './components/app-sidebar'
-import { Separator } from '@/components/ui/separator'
-import BreadcrumbsHeader from './components/breadcrumbs'
-import Header from './components/header'
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const projectResponse = await getProjectDetails()
   const projectDetails = await projectResponse.json()
 
@@ -19,9 +16,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <SidebarProvider>
       <AppSidebar project={projectDetails} user={userDetails} />
-      <SidebarInset>
-        {children}
-      </SidebarInset>
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   )
 }

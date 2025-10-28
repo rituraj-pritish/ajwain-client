@@ -28,7 +28,7 @@ import Link from 'next/link'
 import Logo from '../components/logo'
 import ThemeToggle from '../components/theme-toggle'
 
-const schema = z.object({
+export const schema = z.object({
   projectName: z.string().min(1, 'Please enter project name'),
   name: z.string().min(1, 'Please enter user name'),
   email: z.email('Please enter a valid email'),
@@ -48,7 +48,7 @@ export default function SignUpForm() {
     },
   })
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
       const response = await signUp(values)
       toast.success(`${values.projectName} has been created.`)

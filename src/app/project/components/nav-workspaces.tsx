@@ -39,14 +39,22 @@ interface Props {
   workspaces: Workspace[]
 }
 
+export interface Item extends Omit<Workspace, 'tasks'> {
+  url: string
+  isActive: boolean
+  items: Item[]
+}
+
 export default function NavWorkspaces({ workspaces }: Props) {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const [selectedWorkspace, setSelectedWorkspace] = useState(null)
+  const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(
+    null,
+  )
 
   const pathName = usePathname()
 
-  const items = workspaces?.map(({ id, name }) => ({
+  const items: Item[] = workspaces?.map(({ id, name }) => ({
     id,
     name,
     url: `/project/workspace/${id}`,
@@ -72,7 +80,11 @@ export default function NavWorkspaces({ workspaces }: Props) {
           {items?.map((item) => (
             <Collapsible key={item.name} asChild defaultOpen={item.isActive}>
               <SidebarMenuItem className="menu-item">
-                <SidebarMenuButton asChild tooltip={item.name} isActive={item.isActive}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.name}
+                  isActive={item.isActive}
+                >
                   <Link href={item.url}>
                     <span>{item.name}</span>
                   </Link>

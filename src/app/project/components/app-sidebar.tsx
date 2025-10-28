@@ -4,12 +4,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarTrigger,
 } from '@/components/ui/sidebar'
-import ThemeToggle from '../../components/theme-toggle'
-import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
 import Project from '@/types/project.interface'
 import User from '@/types/user.interface'
 import NavWorkspaces from './nav-workspaces'

@@ -1,4 +1,7 @@
-export async function signIn (body) {
+import z from 'zod';
+import { schema } from './sign-in-form';
+
+export async function signIn (body: z.infer<typeof schema>) {
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/users/signin', {
       method: 'POST',

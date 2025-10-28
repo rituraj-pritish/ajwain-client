@@ -3,48 +3,24 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { useEffect, useState } from 'react'
-import { getWorkspace } from '../actions/clientActions'
-import { useParams } from 'next/navigation'
-import Link from 'next/link'
+import Workspace from '@/types/workspace.interface'
 
-export default function BreadcrumbsHeader() {
-  const { workspaceId } = useParams()
-  const [details, setDetails] = useState({})
-  const [isLoading, setIsLoading] = useState(false)
+interface Props {
+  workspace: Workspace
+}
 
-  const getDetails = async (id: number) => {
-    setIsLoading(true)
-    try {
-      const response = await getWorkspace({
-        id,
-      })
-      const details = await response.json()
-      setDetails(details)
-    } catch (error) {
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    getDetails(workspaceId)
-  }, [workspaceId])
-
+export default function BreadcrumbsHeader({ workspace }: Props) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
-          <BreadcrumbLink asChild>
-            <Link href={`/project/workspace/${workspaceId}`}>
-              {details?.name}
-            </Link>
-          </BreadcrumbLink>
+          {/* <BreadcrumbLink asChild> */}
+          {/* <Link href={`/project/workspace/${workspaceId}`}> */}
+          {workspace?.name}
+          {/* </Link> */}
+          {/* </BreadcrumbLink> */}
         </BreadcrumbItem>
         {/* <BreadcrumbSeparator className="hidden md:block" />
         <BreadcrumbItem>

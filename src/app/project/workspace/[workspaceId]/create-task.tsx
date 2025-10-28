@@ -29,11 +29,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { Calendar } from '@/components/ui/calendar'
 import UserSelector from './user-selector'
 
-const schema = z.object({
+export const schema = z.object({
   title: z.string().min(1, 'Please enter task title'),
   description: z.string().optional(),
-  date: z.date().optional(),
-  memberIds: z.array(z.number()).optional(),
+  date: z.string().optional(),
+  memberIds: z.array(z.number()),
 })
 
 export default function CreateTask() {
@@ -51,12 +51,12 @@ export default function CreateTask() {
     },
   })
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
       const response = await createTask({
         ...values,
         workspaceId: Number(workspaceId),
-        date: values.date ? new Date(values.date).toISOString() : null,
+        date: values.date ? new Date(values.date).toISOString() : undefined,
         memberIds: values.memberIds.join(','),
       })
       const data = await response.json()
@@ -87,13 +87,13 @@ export default function CreateTask() {
           <SheetHeader>
             <SheetTitle>Create Task</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4">
+          <FieldGroup className="px-4 grid grid-cols-24">
             <Controller
               name="title"
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
-                  <Field>
+                  <Field className="col-span-24 md:col-span-15 lg:col-span-17 xl:col-span-18">
                     <FieldLabel>Title</FieldLabel>
                     <Input {...field} placeholder="Enter task title" />
                     {fieldState.invalid && (
@@ -103,63 +103,59 @@ export default function CreateTask() {
                 )
               }}
             />
-            <span className="flex gap-4">
-              <Controller
-                name="description"
-                control={form.control}
-                render={({ field, fieldState }) => {
-                  return (
-                    <Field>
-                      <FieldLabel>Description</FieldLabel>
-                      <Textarea
-                        {...field}
-                        className="h-full"
-                        placeholder="Enter task description"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )
-                }}
-              />
-              <span className="w-70">
-                <Controller
-                  name="date"
-                  control={form.control}
-                  render={({ field, fieldState }) => {
-                    return (
-                      <Field>
-                        <FieldLabel>Date</FieldLabel>
-                        <Calendar
-                          {...field}
-                          mode="single"
-                          defaultMonth={new Date()}
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          captionLayout={'dropdown'}
-                          className="rounded-lg border shadow-sm"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )
-                  }}
-                />
-              </span>
-            </span>
             <Controller
               name="memberIds"
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
-                  <Field>
+                  <Field className="col-span-12 order-4 md:order-none md:col-span-9 lg:col-span-7 xl:col-span-6 w-full">
                     <FieldLabel>Assign Members</FieldLabel>
                     <UserSelector
                       onChange={(users) =>
                         field.onChange(users.map(({ id }) => id))
                       }
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )
+              }}
+            />
+            <Controller
+              name="description"
+              control={form.control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Field className="h-60 col-span-24 md:col-span-15 lg:col-span-17 xl:col-span-18">
+                    <FieldLabel>Description</FieldLabel>
+                    <Textarea
+                      {...field}
+                      className="h-full"
+                      placeholder="Enter task description"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )
+              }}
+            />
+            <Controller
+              name="date"
+              control={form.control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Field className="col-span-12 md:col-span-9 lg:col-span-7 xl:col-span-6">
+                    <FieldLabel>Date</FieldLabel>
+                    <Calendar
+                      {...field}
+                      mode="single"
+                      defaultMonth={new Date()}
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={field.onChange}
+                      captionLayout={'dropdown'}
+                      className="rounded-lg border shadow-sm"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />

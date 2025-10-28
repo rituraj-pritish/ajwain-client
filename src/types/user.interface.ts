@@ -1,10 +1,11 @@
 export enum UserRole {
-  PROJECT_ADMIN,
-  MEMBER
+  PROJECT_ADMIN = 'PROJECT_ADMIN',
+  MEMBER = 'MEMBER',
 }
 
 export default interface User {
-  id: number;
-  name: string;
-  email: string;
+  id: number
+  name: string
+  email: string
+  role: UserRole
 }
