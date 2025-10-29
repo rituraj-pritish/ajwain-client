@@ -29,15 +29,17 @@ export default function DeleteWorkspaceAlertDialog({
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
+  if (!workspace) return null
+
   const handleDelete = async () => {
     setIsLoading(true)
     try {
       await deleteWorkspace({
-        id: workspace!?.id,
+        id: workspace.id,
       })
       onOpenChange(false)
       router.refresh()
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -49,7 +51,7 @@ export default function DeleteWorkspaceAlertDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Delete Workspace "{workspace?.name}"?
+            Delete Workspace &quot;{workspace?.name}&quot;?
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete this

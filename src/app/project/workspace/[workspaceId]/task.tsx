@@ -24,7 +24,7 @@ export const schema = z.object({
   title: z.string().min(1, 'Please enter task title'),
   description: z.string().optional(),
   date: z.string().optional(),
-  memberIds: z.any(),
+  memberIds: z.array(z.object()),
 })
 
 export default function Task() {
@@ -61,6 +61,7 @@ export default function Task() {
   useEffect(() => {
     setIsOpen(!!taskId)
     if (taskId) getDetails(taskId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId])
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {

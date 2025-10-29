@@ -33,8 +33,6 @@ import {
 } from '@/components/ui/select'
 import { createMember } from '../clientActions'
 
-interface Props {}
-
 export const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
   email: z.email('Please enter valid email'),
@@ -42,7 +40,7 @@ export const schema = z.object({
   role: z.string(),
 })
 
-export default function CreateMember(props: Props) {
+export default function CreateMember() {
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -67,7 +65,7 @@ export default function CreateMember(props: Props) {
       setIsOpen(false)
       form.reset()
       toast.success(`${values.name} member created successfully.`)
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     }
   }

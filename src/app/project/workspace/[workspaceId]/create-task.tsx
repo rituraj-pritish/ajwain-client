@@ -24,7 +24,7 @@ export const schema = z.object({
   title: z.string().min(1, 'Please enter task title'),
   description: z.string().optional(),
   date: z.string().optional(),
-  memberIds: z.array(z.number()),
+  memberIds: z.array(z.object()),
 })
 
 export default function CreateTask() {
@@ -57,8 +57,7 @@ export default function CreateTask() {
       setIsOpen(false)
       form.reset()
       toast.success('Task created successfully.')
-    } catch (error) {
-      console.log('err', error)
+    } catch {
       toast.error('Something went wrong. Please try again.')
     }
   }
@@ -71,7 +70,7 @@ export default function CreateTask() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button>Create Task</Button>
+        <Button data-testid="create-task-button">Create Task</Button>
       </SheetTrigger>
       <form id="create-task">
         <SheetContent side="bottom">
@@ -85,6 +84,7 @@ export default function CreateTask() {
               id="create-task"
               onClick={form.handleSubmit(handleSubmit)}
               disabled={form.formState.isSubmitting}
+              data-testid="create-task-form-button"
             >
               {form.formState.isSubmitting && <Spinner />}
               Create Task

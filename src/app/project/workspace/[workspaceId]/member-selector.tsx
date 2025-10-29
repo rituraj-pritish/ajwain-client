@@ -16,8 +16,7 @@ import {
 } from '@/components/ui/tooltip'
 import { getInitials } from '@/lib/utils'
 import { ChevronsUpDown, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import './user-selector.css'
+import './member-selector.css'
 import {
   Popover,
   PopoverContent,
@@ -32,7 +31,7 @@ interface Props {
   onChange: (users: User[]) => void
 }
 
-export default function UserSelector({
+export default function MemberSelector({
   users = [],
   value = [],
   onChange,
@@ -54,6 +53,7 @@ export default function UserSelector({
             variant="outline"
             role="combobox"
             className="justify-between h-[50px] w-full"
+            data-testid="member-selector"
           >
             Select members
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-1 *:data-[slot=avatar]:ring-2">
@@ -61,7 +61,10 @@ export default function UserSelector({
                 return (
                   <Tooltip key={id}>
                     <TooltipTrigger asChild>
-                      <Avatar className="avatar relative overflow-visible border border-black dark:border-white">
+                      <Avatar
+                        className="avatar relative overflow-visible border border-black dark:border-white"
+                        data-testid="member-selector-avatar"
+                      >
                         <AvatarFallback>{getInitials(name)}</AvatarFallback>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -99,6 +102,7 @@ export default function UserSelector({
                     key={user.id}
                     disabled={!!value.find(({ id }) => id === user.id)}
                     onSelect={() => handleSelect(user)}
+                    data-testid="member-selector-option"
                   >
                     {user.name}
                   </CommandItem>

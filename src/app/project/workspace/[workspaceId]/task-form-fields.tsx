@@ -7,7 +7,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Calendar } from '@/components/ui/calendar'
-import UserSelector from './user-selector'
+import MemberSelector from './member-selector'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Controller, UseFormReturn } from 'react-hook-form'
 import z from 'zod'
@@ -47,7 +47,11 @@ export default function TaskFormFields({ form }: Props) {
             return (
               <Field className="col-span-24 md:col-span-15 lg:col-span-17 xl:col-span-18">
                 <FieldLabel>Title</FieldLabel>
-                <Input {...field} placeholder="Enter task title" />
+                <Input
+                  {...field}
+                  placeholder="Enter task title"
+                  data-testid="title"
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -62,7 +66,7 @@ export default function TaskFormFields({ form }: Props) {
             return (
               <Field className="col-span-12 order-4 md:order-none md:col-span-9 lg:col-span-7 xl:col-span-6 w-full">
                 <FieldLabel>Assign Members</FieldLabel>
-                <UserSelector
+                <MemberSelector
                   users={details.users}
                   value={field.value}
                   onChange={field.onChange}
@@ -85,6 +89,7 @@ export default function TaskFormFields({ form }: Props) {
                   {...field}
                   className="h-full"
                   placeholder="Enter task description"
+                  data-testid="description"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -108,6 +113,7 @@ export default function TaskFormFields({ form }: Props) {
                   onSelect={(date) => field.onChange(date?.toISOString())}
                   captionLayout={'dropdown'}
                   className="rounded-lg border shadow-sm"
+                  data-testid="date"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

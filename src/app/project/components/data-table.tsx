@@ -18,7 +18,7 @@ import {
 interface Props<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  setRowProps?: (row: Row<TData>) => {}
+  setRowProps?: (row: Row<TData>) => object
 }
 
 export default function DataTable<TData, TValue>({

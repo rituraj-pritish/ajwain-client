@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/tooltip'
 import Workspace from '@/types/workspace.interface'
 import { ChevronRight, MoreHorizontal, Plus } from 'lucide-react'
-import AddWorkspace from './create-workspace'
+import AddWorkspace from './add-workspace'
 import { useState } from 'react'
 import {
   DropdownMenu,
@@ -64,7 +64,10 @@ export default function NavWorkspaces({ workspaces }: Props) {
     <>
       <SidebarGroup>
         <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
-        <SidebarGroupAction onClick={() => setIsSheetOpen(true)}>
+        <SidebarGroupAction
+          onClick={() => setIsSheetOpen(true)}
+          data-testid="add-workspace-button"
+        >
           <Tooltip>
             <TooltipTrigger asChild className="cursor-pointer">
               <Plus size={14} />
@@ -83,7 +86,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
                   tooltip={item.name}
                   isActive={item.isActive}
                 >
-                  <Link href={item.url}>
+                  <Link href={item.url} data-testid='nav-workspace-link'>
                     <span>{item.name}</span>
                   </Link>
                 </SidebarMenuButton>

@@ -44,10 +44,10 @@ export default function SignInForm() {
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
-      const response = await signIn(values)
+      await signIn(values)
       toast.success('Sign In successfull')
       router.replace('/project')
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     }
   }
@@ -69,7 +69,7 @@ export default function SignInForm() {
                   return (
                     <Field>
                       <FieldLabel>Email</FieldLabel>
-                      <Input {...field} placeholder="Enter user email" />
+                      <Input {...field} placeholder="Enter user email" data-testid='email' />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -88,6 +88,7 @@ export default function SignInForm() {
                         {...field}
                         type="password"
                         placeholder="Enter user password"
+                        data-testid='password'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />

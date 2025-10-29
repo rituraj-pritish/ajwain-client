@@ -51,7 +51,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
       onOpenChange(false)
       toast.success(`${values.name} created successfully.`)
     } catch (error: any) {
-      if (error.message) {
+      if (error && error.message) {
         return form.setError('name', {
           message: error.message,
         })
@@ -67,10 +67,10 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <form id="create-workspace">
+      <form id="add-workspace-form">
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle>Create Workspace</SheetTitle>
+            <SheetTitle>Add Workspace</SheetTitle>
           </SheetHeader>
           <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
@@ -80,7 +80,11 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
                 return (
                   <Field>
                     <FieldLabel>Name</FieldLabel>
-                    <Input {...field} placeholder="Enter workspace name" />
+                    <Input
+                      {...field}
+                      placeholder="Enter workspace name"
+                      data-testid="name"
+                    />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -92,12 +96,13 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
           <SheetFooter className="flex-row justify-end">
             <Button
               type="submit"
-              id="create-workspace"
+              id="add-workspace-form"
               disabled={!form.formState.isValid || form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}
+              data-testid="add-workspace-form-submit-button"
             >
               {form.formState.isSubmitting && <Spinner />}
-              Create Workspace
+              Add Workspace
             </Button>
             <SheetClose asChild>
               <Button variant="outline">Cancel</Button>

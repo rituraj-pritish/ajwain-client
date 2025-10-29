@@ -50,10 +50,10 @@ export default function SignUpForm() {
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
-      const response = await signUp(values)
+      await signUp(values)
       toast.success(`${values.projectName} has been created.`)
       router.replace('/project')
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     }
   }
@@ -80,7 +80,11 @@ export default function SignUpForm() {
                   return (
                     <Field>
                       <FieldLabel>Project Name</FieldLabel>
-                      <Input {...field} placeholder="Enter project name" />
+                      <Input
+                        data-testid="projectName"
+                        {...field}
+                        placeholder="Enter project name"
+                      />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -96,7 +100,11 @@ export default function SignUpForm() {
                   return (
                     <Field>
                       <FieldLabel>Name</FieldLabel>
-                      <Input {...field} placeholder="Enter user name" />
+                      <Input
+                        data-testid="name"
+                        {...field}
+                        placeholder="Enter user name"
+                      />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -111,7 +119,11 @@ export default function SignUpForm() {
                   return (
                     <Field>
                       <FieldLabel>Email</FieldLabel>
-                      <Input {...field} placeholder="Enter user email" />
+                      <Input
+                        data-testid="email"
+                        {...field}
+                        placeholder="Enter user email"
+                      />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -127,6 +139,7 @@ export default function SignUpForm() {
                     <Field>
                       <FieldLabel>Password</FieldLabel>
                       <Input
+                        data-testid="password"
                         {...field}
                         type="password"
                         placeholder="Enter user password"

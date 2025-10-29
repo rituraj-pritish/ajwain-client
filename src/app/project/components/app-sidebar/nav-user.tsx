@@ -38,7 +38,7 @@ export function NavUser({ user }: Props) {
       await logout()
       router.replace('/signin')
       toast.success('Logout successful')
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     }
   }
@@ -49,8 +49,9 @@ export function NavUser({ user }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
-              size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              size="lg"
+              data-testid="nav-user-menu-trigger"
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">
@@ -79,7 +80,7 @@ export function NavUser({ user }: Props) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} data-testid="logout">
               <LogOut />
               Log out
             </DropdownMenuItem>
