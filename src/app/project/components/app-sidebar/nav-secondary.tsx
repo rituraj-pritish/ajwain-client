@@ -16,7 +16,10 @@ export default function NavSecondary() {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem key="members">
-            <SidebarMenuButton asChild isActive={pathName === '/project/members'}>
+            <SidebarMenuButton
+              asChild
+              isActive={pathName === '/project/members'}
+            >
               <Link href="/project/members">
                 <Users />
                 <span>Members</span>

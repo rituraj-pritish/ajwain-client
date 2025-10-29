@@ -1,7 +1,7 @@
-import Workspace from './workspace.interface';
+import Workspace from './workspace.interface'
 
 export default interface Project {
-  id: number;
-  name: string;
-  workspaces: Workspace[];
+  id: number
+  name: string
+  workspaces: Workspace[]
 }

@@ -1,19 +1,22 @@
-import z from 'zod';
-import { schema } from './sign-in-form';
+import z from 'zod'
+import { schema } from './sign-in-form'
 
-export async function signIn (body: z.infer<typeof schema>) {
+export async function signIn(body: z.infer<typeof schema>) {
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/users/signin', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + '/users/signin',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body)
-    }) 
+    )
 
-    if(response.status !== 201) throw response;
+    if (response.status !== 201) throw response
   } catch (error) {
-    throw error;
+    throw error
   }
 }

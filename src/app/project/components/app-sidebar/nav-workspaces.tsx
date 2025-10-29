@@ -86,7 +86,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
                   tooltip={item.name}
                   isActive={item.isActive}
                 >
-                  <Link href={item.url} data-testid='nav-workspace-link'>
+                  <Link href={item.url} data-testid="nav-workspace-link">
                     <span>{item.name}</span>
                   </Link>
                 </SidebarMenuButton>
