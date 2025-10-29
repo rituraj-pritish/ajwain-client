@@ -48,9 +48,7 @@ export interface Item extends Omit<Workspace, 'tasks'> {
 export default function NavWorkspaces({ workspaces }: Props) {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(
-    null,
-  )
+  const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(null)
 
   const pathName = usePathname()
 

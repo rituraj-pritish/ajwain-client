@@ -17,10 +17,10 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import z from 'zod'
-import { createWorkspace } from '../actions/clientActions'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
+import { createWorkspace } from '../../clientActions'
 
 interface Props {
   isOpen: boolean
@@ -72,7 +72,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
           <SheetHeader>
             <SheetTitle>Create Workspace</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 grid grid-cols-3 gap-4">
+          <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
               name="name"
               control={form.control}

@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/alert-dialog'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { deleteWorkspace } from '../actions/clientActions'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
 import { Item } from './nav-workspaces'
+import { deleteWorkspace } from '../../clientActions'
 
 interface Props {
   workspace: Item | null

@@ -21,8 +21,8 @@ import User from '@/types/user.interface'
 import { getInitials } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { logout } from '../actions/clientActions'
 import { useTheme } from 'next-themes'
+import { logout } from '../../clientActions'
 
 interface Props {
   user: User

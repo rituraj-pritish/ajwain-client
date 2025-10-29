@@ -3,7 +3,8 @@ import Task from '@/types/task.interface'
 import DataTable from '../../components/data-table'
 import { ColumnDef, Row } from '@tanstack/react-table'
 import dayjs from 'dayjs'
-import { snakeCaseToString, toSentenceCase } from '@/lib/utils'
+import { cn, snakeCaseToString, toSentenceCase } from '@/lib/utils'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
   tasks: Task[]
@@ -35,6 +36,9 @@ const columns: ColumnDef<Task>[] = [
 ]
 
 export default function TasksTable({ tasks }: Props) {
+  const pathName = usePathname()
+  const router = useRouter()
+
   const setRowProps = (row: Row<Task>) => {
     function getClassName() {
       const status = row.original.status
@@ -44,15 +48,19 @@ export default function TasksTable({ tasks }: Props) {
         case 'IN_PROGRESS':
           return 'bg-orange-100 hover:bg-amber-200 dark:bg-amber-900 dark:hover:bg-orange-800'
         case 'COMPLETED':
-          return 'bg-green-100 hover:bg-green-200 dark:bg-green-900 dark:hover:bg-green-800'
+          return 'bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-900 dark:hover:bg-emerald-800'
         default:
           return ''
       }
     }
 
+    const taskId = row.original.id
+
     return {
-      className: getClassName(),
+      className: cn('cursor-pointer', getClassName()),
+      onClick: () => router.replace(`${pathName}?taskId=${taskId}`),
     }
   }
+
   return <DataTable data={tasks} columns={columns} setRowProps={setRowProps} />
 }

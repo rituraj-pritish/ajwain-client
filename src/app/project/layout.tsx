@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { getProjectDetails, getUserDetails } from './actions/serverActions'
-import AppSidebar from './components/app-sidebar'
+import AppSidebar from './components/app-sidebar/app-sidebar'
+import { getProjectDetails, getUserDetails } from './actions'
 
 export default async function Layout({
   children,

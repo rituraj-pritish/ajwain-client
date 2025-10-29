@@ -35,7 +35,7 @@ export default function AppSidebar({ project, user }: Props) {
       </SidebarHeader>
       <SidebarContent>
         <NavWorkspaces workspaces={project.workspaces} />
-        <NavSecondary/>
+        <NavSecondary />
       </SidebarContent>
       <SidebarFooter className="my-2">
         <NavUser user={user} />

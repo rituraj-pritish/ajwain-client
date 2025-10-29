@@ -1,5 +1,5 @@
 import Header from '../components/header'
-import { getMembers } from './actions/serverActions'
+import { getMembers } from './actions'
 import Breadcrumbs from './components/breadcrumbs'
 import CreateMember from './components/create-member'
 import MembersTable from './components/members-table'

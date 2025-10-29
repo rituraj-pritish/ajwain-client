@@ -1,7 +1,8 @@
-import { getWorkspace } from '../../actions/serverActions'
+import { getWorkspace } from '../../actions'
 import BreadcrumbsHeader from '../../components/breadcrumbs'
 import Header from '../../components/header'
 import CreateTask from './create-task'
+import Task from './task'
 import TasksTable from './tasks-table'
 
 interface Props {
@@ -26,6 +27,7 @@ export default async function Page({ params }: Props) {
           <CreateTask />
         </div>
         <TasksTable tasks={workspace?.tasks} />
+        <Task />
       </div>
     </>
   )

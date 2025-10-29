@@ -23,7 +23,6 @@ import z from 'zod'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
-import { createMember } from '../actions/clientActions'
 import { useState } from 'react'
 import {
   Select,
@@ -32,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { createMember } from '../clientActions'
 
 interface Props {}
 
@@ -87,7 +87,7 @@ export default function CreateMember(props: Props) {
           <SheetHeader>
             <SheetTitle>Create Member</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 grid grid-cols-3 gap-4">
+          <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
               name="name"
               control={form.control}
@@ -158,7 +158,6 @@ export default function CreateMember(props: Props) {
           </FieldGroup>
           <SheetFooter className="flex-row justify-end">
             <Button
-              type="submit"
               id="create-member"
               disabled={form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}

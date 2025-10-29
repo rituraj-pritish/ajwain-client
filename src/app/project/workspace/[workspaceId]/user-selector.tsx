@@ -24,47 +24,27 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
-
-interface User {
-  id: number
-  name: string
-}
+import User from '@/types/user.interface'
 
 interface Props {
+  users: User[]
+  value: User[]
   onChange: (users: User[]) => void
 }
 
-const USERS: User[] = [
-  {
-    id: 1,
-    name: 'Khalisee',
-  },
-  {
-    id: 2,
-    name: 'John Snow',
-  },
-  {
-    id: 3,
-    name: 'Arya Stark',
-  },
-]
-
-export default function UserSelector({ onChange }: Props) {
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([])
-
+export default function UserSelector({
+  users = [],
+  value = [],
+  onChange,
+}: Props) {
   const handleSelect = (user: User) => {
-    setSelectedUsers((prevState) => [...prevState, user])
+    onChange([...value, user])
   }
 
   const handleRemove = (e: React.MouseEvent<HTMLSpanElement>, id: number) => {
     e.preventDefault()
-    setSelectedUsers((prevState) => prevState.filter((user) => id !== user.id))
+    onChange(value.filter((user) => user.id !== id))
   }
-
-  useEffect(() => {
-    if (typeof onChange !== 'function') return
-    onChange(selectedUsers)
-  }, [selectedUsers])
 
   return (
     <div>
@@ -77,11 +57,11 @@ export default function UserSelector({ onChange }: Props) {
           >
             Select members
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-1 *:data-[slot=avatar]:ring-2">
-              {selectedUsers.map(({ id, name }) => {
+              {value.map(({ id, name }) => {
                 return (
                   <Tooltip key={id}>
                     <TooltipTrigger asChild>
-                      <Avatar className="avatar relative overflow-visible">
+                      <Avatar className="avatar relative overflow-visible border border-black dark:border-white">
                         <AvatarFallback>{getInitials(name)}</AvatarFallback>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -114,10 +94,10 @@ export default function UserSelector({ onChange }: Props) {
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {USERS.map((user) => (
+                {users.map((user) => (
                   <CommandItem
                     key={user.id}
-                    disabled={!!selectedUsers.find(({ id }) => id === user.id)}
+                    disabled={!!value.find(({ id }) => id === user.id)}
                     onSelect={() => handleSelect(user)}
                   >
                     {user.name}
