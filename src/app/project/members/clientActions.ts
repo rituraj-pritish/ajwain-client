@@ -1,5 +1,5 @@
 import z from 'zod'
-import { schema } from './components/create-member'
+import { schema } from './components/add-member'
 
 export async function createMember(body: z.infer<typeof schema>) {
   return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/users/create', {

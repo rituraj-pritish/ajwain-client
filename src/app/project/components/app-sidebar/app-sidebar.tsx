@@ -10,6 +10,7 @@ import User from '@/types/user.interface'
 import NavWorkspaces from './nav-workspaces'
 import { NavUser } from './nav-user'
 import NavSecondary from './nav-secondary'
+import { Separator } from '@/components/ui/separator'
 
 interface Props {
   project: Project
@@ -19,25 +20,27 @@ interface Props {
 export default function AppSidebar({ project, user }: Props) {
   return (
     <Sidebar>
-      <SidebarHeader className="flex flex-row my-2">
+      <SidebarHeader className="flex flex-row my-0.5">
         <div className="bg-sidebar-primary dark:bg-primary text-sidebar-primary-foreground dark:text-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg">
           {project?.name?.charAt(0)?.toUpperCase()}
         </div>
-        <div className="flex flex-col justify-center gap-1 leading-none">
+        <div className="flex flex-col justify-between gap-1 leading-none">
           <span className="text-md font-semibold">{project?.name}</span>
           <span className="flex items-baseline">
-            <span className="text-xs">powered by</span>
-            <span className="text-sm ml-1 font-medium tracking-widest">
+            <span className="text-[10px] font-extralight">powered by</span>
+            <span className="text-xs ml-1 font-extralight tracking-widest">
               AJWAIN
             </span>
           </span>
         </div>
       </SidebarHeader>
+      <Separator />
       <SidebarContent>
         <NavWorkspaces workspaces={project.workspaces} />
         <NavSecondary />
       </SidebarContent>
-      <SidebarFooter className="my-2">
+      <Separator />
+      <SidebarFooter className="my-0.5">
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>

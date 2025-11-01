@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/tooltip'
 import Workspace from '@/types/workspace.interface'
 import { ChevronRight, MoreHorizontal, Plus } from 'lucide-react'
-import AddWorkspace from './add-workspace'
+import AddAndRenameWorkspace from './add-and-rename-workspace'
 import { useState } from 'react'
 import {
   DropdownMenu,
@@ -92,12 +92,23 @@ export default function NavWorkspaces({ workspaces }: Props) {
                 </SidebarMenuButton>
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild className="menu-trigger">
+                  <DropdownMenuTrigger
+                    asChild
+                    className="menu-trigger p-0.5 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-950"
+                  >
                     <SidebarMenuAction>
                       <MoreHorizontal />
                     </SidebarMenuAction>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="right" align="start">
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setSelectedWorkspace(item)
+                        setIsSheetOpen(true)
+                      }}
+                    >
+                      <span>Rename Workspace</span>
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
                         setSelectedWorkspace(item)
@@ -137,7 +148,14 @@ export default function NavWorkspaces({ workspaces }: Props) {
           ))}
         </SidebarMenu>
       </SidebarGroup>
-      <AddWorkspace isOpen={isSheetOpen} onOpenChange={setIsSheetOpen} />
+      <AddAndRenameWorkspace
+        workspace={selectedWorkspace}
+        isOpen={isSheetOpen}
+        onOpenChange={() => {
+          setIsSheetOpen(false)
+          setSelectedWorkspace(null)
+        }}
+      />
       <DeleteWorkspaceAlertDialog
         workspace={selectedWorkspace}
         isOpen={isAlertOpen}

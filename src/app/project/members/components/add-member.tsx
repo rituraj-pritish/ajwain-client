@@ -40,7 +40,7 @@ export const schema = z.object({
   role: z.string(),
 })
 
-export default function CreateMember() {
+export default function AddMember() {
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -64,7 +64,7 @@ export default function CreateMember() {
       router.refresh()
       setIsOpen(false)
       form.reset()
-      toast.success(`${values.name} member created successfully.`)
+      toast.success(`${values.name} member added successfully.`)
     } catch {
       toast.error('Something went wrong. Please try again.')
     }
@@ -78,12 +78,12 @@ export default function CreateMember() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button>Create Member</Button>
+        <Button>Add Member</Button>
       </SheetTrigger>
       <form id="create-member">
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle>Create Member</SheetTitle>
+            <SheetTitle>Add Member</SheetTitle>
           </SheetHeader>
           <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
@@ -161,7 +161,7 @@ export default function CreateMember() {
               onClick={form.handleSubmit(handleSubmit)}
             >
               {form.formState.isSubmitting && <Spinner />}
-              Create Member
+              Add Member
             </Button>
             <SheetClose asChild>
               <Button variant="outline">Cancel</Button>

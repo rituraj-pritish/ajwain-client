@@ -24,10 +24,10 @@ export const schema = z.object({
   title: z.string().min(1, 'Please enter task title'),
   description: z.string().optional(),
   date: z.string().optional(),
-  memberIds: z.array(z.object()),
+  memberIds: z.any(),
 })
 
-export default function CreateTask() {
+export default function AddTask() {
   const { workspaceId } = useParams()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -48,7 +48,9 @@ export default function CreateTask() {
         ...values,
         workspaceId: Number(workspaceId),
         date: values.date,
-        memberIds: values.memberIds.map(({ id }) => id).join(','),
+        memberIds: values.memberIds
+          .map(({ id }: { id: string }) => id)
+          .join(','),
       })
       const data = await response.json()
 
@@ -56,7 +58,7 @@ export default function CreateTask() {
       router.refresh()
       setIsOpen(false)
       form.reset()
-      toast.success('Task created successfully.')
+      toast.success('Task added successfully.')
     } catch {
       toast.error('Something went wrong. Please try again.')
     }
@@ -70,13 +72,14 @@ export default function CreateTask() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button data-testid="create-task-button">Create Task</Button>
+        <Button data-testid="create-task-button">Add Task</Button>
       </SheetTrigger>
       <form id="create-task">
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle>Create Task</SheetTitle>
+            <SheetTitle>Add Task</SheetTitle>
           </SheetHeader>
+          {/* @ts-expect-error lack of solution */}
           <TaskFormFields form={form} />
           <SheetFooter className="flex-row justify-end">
             <Button
@@ -87,7 +90,7 @@ export default function CreateTask() {
               data-testid="create-task-form-button"
             >
               {form.formState.isSubmitting && <Spinner />}
-              Create Task
+              Add Task
             </Button>
             <SheetClose asChild>
               <Button variant="outline">Cancel</Button>

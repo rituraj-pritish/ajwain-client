@@ -36,7 +36,9 @@ describe('workspace flows', () => {
 
     cy.get('[aria-label="Choose the Month"]').select(currentMonthThreeChars)
     cy.get('[aria-label="Choose the Year"]').select(fullYear.toString())
-    cy.contains('button', day.toString()).click()
+    cy.get(
+      `[data-day="${('0' + day).slice(-2)}/${('0' + (now.getMonth() + 1)).slice(-2)}/${fullYear}"`,
+    ).click()
 
     cy.get('[data-testid="create-task-form-button"]').click()
 

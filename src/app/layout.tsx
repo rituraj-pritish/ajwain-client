@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
           {children}
-          <Toaster />
+          <Toaster position='bottom-left' />
         </Providers>
       </body>
     </html>

@@ -1,7 +1,7 @@
 import Header from '../components/header'
 import { getMembers } from './actions'
 import Breadcrumbs from './components/breadcrumbs'
-import CreateMember from './components/create-member'
+import AddMember from './components/add-member'
 import MembersTable from './components/members-table'
 
 export default async function Page() {
@@ -15,7 +15,7 @@ export default async function Page() {
       </Header>
       <div className="container mx-auto p-4">
         <div className="mb-4 flex justify-end">
-          <CreateMember />
+          <AddMember />
         </div>
         <MembersTable data={data} />
       </div>

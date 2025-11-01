@@ -11,12 +11,18 @@ import MemberSelector from './member-selector'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Controller, UseFormReturn } from 'react-hook-form'
 import z from 'zod'
-import { schema } from './create-task'
+import { schema as createSchema } from './add-task'
 import { useEffect, useState } from 'react'
 import { getUsers } from './actions'
+import { Badge } from '@/components/ui/badge'
+import { TaskStatus } from '@/types/task.interface'
+import dayjs from 'dayjs'
+import { schema as updateSchema } from './task'
 
 interface Props {
-  form: UseFormReturn<z.infer<typeof schema>>
+  form: UseFormReturn<
+    z.infer<typeof createSchema> | z.infer<typeof updateSchema>
+  >
 }
 
 export default function TaskFormFields({ form }: Props) {
@@ -38,7 +44,7 @@ export default function TaskFormFields({ form }: Props) {
   }, [])
 
   return (
-    <ScrollArea className="h-[60vh] md:h-[unset] max-h-[70vh]">
+    <ScrollArea className="h-[60vh] max-h-[70vh]">
       <FieldGroup className="px-4 grid grid-cols-24">
         <Controller
           name="title"
@@ -49,6 +55,7 @@ export default function TaskFormFields({ form }: Props) {
                 <FieldLabel>Title</FieldLabel>
                 <Input
                   {...field}
+                  autoFocus
                   placeholder="Enter task title"
                   data-testid="title"
                 />
@@ -104,15 +111,34 @@ export default function TaskFormFields({ form }: Props) {
           render={({ field, fieldState }) => {
             return (
               <Field className="col-span-12 md:col-span-9 lg:col-span-7 xl:col-span-6">
-                <FieldLabel>Date</FieldLabel>
+                <FieldLabel className="flex justify-between">
+                  Date
+                  {(() => {
+                    const values = form.getValues()
+                    const status = 'status' in values && values.status
+                    const isOverdue = dayjs(field.value).isBefore(
+                      new Date(),
+                      'day',
+                    )
+
+                    if (isOverdue && status !== TaskStatus.COMPLETED) {
+                      return <Badge variant="destructive">Overdue</Badge>
+                    }
+
+                    return null
+                  })()}
+                </FieldLabel>
                 <Calendar
+                  className="rounded-lg border shadow-sm"
                   {...field}
                   mode="single"
+                  disabled={{
+                    before: new Date(),
+                  }}
                   defaultMonth={new Date()}
                   selected={field.value ? new Date(field.value) : undefined}
                   onSelect={(date) => field.onChange(date?.toISOString())}
                   captionLayout={'dropdown'}
-                  className="rounded-lg border shadow-sm"
                   data-testid="date"
                 />
                 {fieldState.invalid && (

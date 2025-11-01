@@ -34,6 +34,17 @@ export async function createWorkspace(body: { name: string }) {
   }
 }
 
+export async function updateWorkspace(body: { id: number; name: string }) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  })
+}
+
 export async function deleteWorkspace(body: { id: number }) {
   try {
     const response = await fetch(

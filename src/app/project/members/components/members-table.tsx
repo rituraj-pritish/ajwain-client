@@ -14,6 +14,9 @@ const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue('name')}</div>
+    ),
   },
   {
     accessorKey: 'email',

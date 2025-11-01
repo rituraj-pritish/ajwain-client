@@ -12,25 +12,37 @@ import {
   flexRender,
   getCoreRowModel,
   Row,
+  Table as TableType,
   useReactTable,
 } from '@tanstack/react-table'
 
-interface Props<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface PropsWithTable<TData> {
+  data?: never
+  columns?: never
   setRowProps?: (row: Row<TData>) => object
+  table: TableType<TData>
+}
+
+interface PropsWithoutTable<TData, TValue> {
+  data: TData[]
+  columns: ColumnDef<TData, TValue>[]
+  setRowProps?: (row: Row<TData>) => object
+  table?: never
 }
 
 export default function DataTable<TData, TValue>({
-  data,
-  columns,
+  data = [],
+  columns = [],
   setRowProps = () => ({}),
-}: Props<TData, TValue>) {
-  const table = useReactTable({
+  table: tableProp,
+}: PropsWithoutTable<TData, TValue> | PropsWithTable<TData>) {
+  const tableLocal = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  const table = tableProp || tableLocal
 
   return (
     <div className="overflow-hidden rounded-md border">

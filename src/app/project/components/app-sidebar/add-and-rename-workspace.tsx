@@ -20,9 +20,12 @@ import z from 'zod'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
-import { createWorkspace } from '../../clientActions'
+import { createWorkspace, updateWorkspace } from '../../clientActions'
+import { useEffect } from 'react'
+import { Item } from './nav-workspaces'
 
 interface Props {
+  workspace: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }
@@ -31,7 +34,11 @@ const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
 })
 
-export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
+export default function AddAndRenameWorkspace({
+  workspace,
+  isOpen,
+  onOpenChange,
+}: Props) {
   const router = useRouter()
   const form = useForm({
     mode: 'onSubmit',
@@ -41,15 +48,23 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
     },
   })
 
+  useEffect(() => {
+    if (workspace) form.reset({ name: workspace.name })
+  }, [workspace])
+
   const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
-      const response = await createWorkspace(values)
+      const response = workspace
+        ? await updateWorkspace({ ...values, id: Number(workspace.id) })
+        : await createWorkspace(values)
       const data = await response.json()
 
       if (!response.ok && data.error) throw data
       router.refresh()
       onOpenChange(false)
-      toast.success(`${values.name} created successfully.`)
+      toast.success(
+        `${values.name} ${workspace ? 'updated' : 'created'} successfully.`,
+      )
     } catch (error: any) {
       if (error && error.message) {
         return form.setError('name', {
@@ -70,7 +85,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
       <form id="add-workspace-form">
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle>Add Workspace</SheetTitle>
+            <SheetTitle>{workspace ? 'Rename' : 'Add'} Workspace</SheetTitle>
           </SheetHeader>
           <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
@@ -102,7 +117,7 @@ export default function AddWorkspace({ isOpen, onOpenChange }: Props) {
               data-testid="add-workspace-form-submit-button"
             >
               {form.formState.isSubmitting && <Spinner />}
-              Add Workspace
+              {workspace ? 'Update' : 'Add'} Workspace
             </Button>
             <SheetClose asChild>
               <Button variant="outline">Cancel</Button>

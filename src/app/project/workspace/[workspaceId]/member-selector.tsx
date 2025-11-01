@@ -55,7 +55,9 @@ export default function MemberSelector({
             className="justify-between h-[50px] w-full"
             data-testid="member-selector"
           >
-            Select members
+            {value.length === 0 && (
+              <span className="text-muted-foreground">Select members</span>
+            )}
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-1 *:data-[slot=avatar]:ring-2">
               {value.map(({ id, name }) => {
                 return (
