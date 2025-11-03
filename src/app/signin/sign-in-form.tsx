@@ -53,17 +53,17 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="mt-16">
+    <div className='mt-16'>
       <Logo />
-      <form id="sign-in-form" onSubmit={form.handleSubmit(handleSubmit)}>
-        <Card className="w-md mx-auto px-4 py-8 mt-6">
+      <form id='sign-in-form' onSubmit={form.handleSubmit(handleSubmit)}>
+        <Card className='w-md mx-auto px-4 py-8 mt-6'>
           <CardHeader>
-            <CardTitle className="mx-auto">Sign In</CardTitle>
+            <CardTitle className='mx-auto'>Sign In</CardTitle>
           </CardHeader>
           <CardContent>
             <FieldGroup>
               <Controller
-                name="email"
+                name='email'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
@@ -71,8 +71,8 @@ export default function SignInForm() {
                       <FieldLabel>Email</FieldLabel>
                       <Input
                         {...field}
-                        placeholder="Enter user email"
-                        data-testid="email"
+                        placeholder='Enter user email'
+                        data-testid='email'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -82,7 +82,7 @@ export default function SignInForm() {
                 }}
               />
               <Controller
-                name="password"
+                name='password'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
@@ -90,9 +90,9 @@ export default function SignInForm() {
                       <FieldLabel>Password</FieldLabel>
                       <Input
                         {...field}
-                        type="password"
-                        placeholder="Enter user password"
-                        data-testid="password"
+                        type='password'
+                        placeholder='Enter user password'
+                        data-testid='password'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -103,18 +103,18 @@ export default function SignInForm() {
               />
             </FieldGroup>
           </CardContent>
-          <CardFooter className="flex-col">
+          <CardFooter className='flex-col'>
             <Button
-              className="w-full"
-              type="submit"
-              id="sign-in-form"
+              className='w-full'
+              type='submit'
+              id='sign-in-form'
               disabled={!form.formState.isValid || form.formState.isSubmitting}
             >
               {form.formState.isSubmitting && <Spinner />}
               Sign In
             </Button>
-            <FieldDescription className="px-6 pt-6 text-center">
-              Start a new project <Link href="/signup">Sign up</Link>
+            <FieldDescription className='px-6 pt-6 text-center'>
+              Start a new project <Link href='/signup'>Sign up</Link>
             </FieldDescription>
           </CardFooter>
         </Card>

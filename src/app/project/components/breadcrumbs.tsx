@@ -25,7 +25,7 @@ export default function BreadcrumbsHeader(props: BoardProp | WorkspaceProp) {
     return (
       <Breadcrumb>
         <BreadcrumbList>
-          <BreadcrumbItem className="hidden md:block" data-testid="breadcrumb">
+          <BreadcrumbItem className='hidden md:block' data-testid='breadcrumb'>
             {props.workspace.name}
           </BreadcrumbItem>
         </BreadcrumbList>
@@ -36,10 +36,10 @@ export default function BreadcrumbsHeader(props: BoardProp | WorkspaceProp) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem className="hidden md:block" data-testid="breadcrumb">
+        <BreadcrumbItem className='hidden md:block' data-testid='breadcrumb'>
           {props?.board?.workspace?.name}
         </BreadcrumbItem>
-        <BreadcrumbSeparator className="hidden md:block" />
+        <BreadcrumbSeparator className='hidden md:block' />
         <BreadcrumbItem>
           <BreadcrumbPage>{props?.board?.name}</BreadcrumbPage>
         </BreadcrumbItem>

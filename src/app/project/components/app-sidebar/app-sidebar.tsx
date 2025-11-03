@@ -20,15 +20,15 @@ interface Props {
 export default function AppSidebar({ project, user }: Props) {
   return (
     <Sidebar>
-      <SidebarHeader className="flex flex-row my-0.5">
-        <div className="bg-sidebar-primary dark:bg-primary text-sidebar-primary-foreground dark:text-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg">
+      <SidebarHeader className='flex flex-row my-0.5'>
+        <div className='bg-sidebar-primary dark:bg-primary text-sidebar-primary-foreground dark:text-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg'>
           {project?.name?.charAt(0)?.toUpperCase()}
         </div>
-        <div className="flex flex-col justify-between gap-1 leading-none">
-          <span className="text-md font-semibold">{project?.name}</span>
-          <span className="flex items-baseline">
-            <span className="text-[10px] font-extralight">powered by</span>
-            <span className="text-xs ml-1 font-extralight tracking-widest">
+        <div className='flex flex-col justify-between gap-1 leading-none'>
+          <span className='text-md font-semibold'>{project?.name}</span>
+          <span className='flex items-baseline'>
+            <span className='text-[10px] font-extralight'>powered by</span>
+            <span className='text-xs ml-1 font-extralight tracking-widest'>
               AJWAIN
             </span>
           </span>
@@ -40,7 +40,7 @@ export default function AppSidebar({ project, user }: Props) {
         <NavSecondary />
       </SidebarContent>
       <Separator />
-      <SidebarFooter className="my-0.5">
+      <SidebarFooter className='my-0.5'>
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>

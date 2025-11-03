@@ -31,7 +31,7 @@ const columns: ColumnDef<Task>[] = [
         }
         onClick={(e) => e.stopPropagation()}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label='Select all'
       />
     ),
     cell: ({ row }) => (
@@ -39,7 +39,7 @@ const columns: ColumnDef<Task>[] = [
         checked={row.getIsSelected()}
         onClick={(e) => e.stopPropagation()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label='Select row'
       />
     ),
     enableSorting: false,
@@ -49,13 +49,13 @@ const columns: ColumnDef<Task>[] = [
     accessorKey: 'title',
     header: 'Title',
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue('title')}</div>
+      return <div className='font-medium'>{row.getValue('title')}</div>
     },
     enableHiding: false,
   },
   {
     accessorKey: 'status',
-    header: () => <div className="text-center">Status</div>,
+    header: () => <div className='text-center'>Status</div>,
     cell: ({ row }) => {
       const status: string = row.getValue('status')
 
@@ -72,8 +72,8 @@ const columns: ColumnDef<Task>[] = [
         }
       }
       return (
-        <div className="text-center">
-          <Badge variant="outline" className={getClassName()}>
+        <div className='text-center'>
+          <Badge variant='outline' className={getClassName()}>
             {toSentenceCase(snakeCaseToString(status))}
           </Badge>
         </div>
@@ -82,20 +82,20 @@ const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'date',
-    header: () => <div className="text-center">Date</div>,
+    header: () => <div className='text-center'>Date</div>,
     cell: ({ row }) => {
       const date: string = row.getValue('date')
       const isCompleted = row.getValue('status') === TaskStatus.COMPLETED
 
-      if (!dayjs(date).isValid()) return <div className="text-center">-</div>
+      if (!dayjs(date).isValid()) return <div className='text-center'>-</div>
 
       const isOverdue = dayjs(date).isBefore(new Date(), 'day') && !isCompleted
 
       return (
-        <div className="text-center">
+        <div className='text-center'>
           {dayjs(date).format('DD MMM YYYY')}
           {isOverdue && (
-            <Badge variant="destructive" className="ml-2">
+            <Badge variant='destructive' className='ml-2'>
               Overdue
             </Badge>
           )}
@@ -141,10 +141,10 @@ export default function TasksTable({ tasks }: { tasks: Task[] }) {
 
   return (
     <>
-      <div className="flex mb-4">
+      <div className='flex mb-4'>
         <Input
-          className="mr-4"
-          placeholder="Search by title..."
+          className='mr-4'
+          placeholder='Search by title...'
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('title')?.setFilterValue(event.target.value)
@@ -153,7 +153,7 @@ export default function TasksTable({ tasks }: { tasks: Task[] }) {
         <AddTask />
       </div>
       <DataTable table={table} setRowProps={setRowProps} />
-      <div className="mt-4">
+      <div className='mt-4'>
         <DataTablePagination table={table} />
       </div>
     </>

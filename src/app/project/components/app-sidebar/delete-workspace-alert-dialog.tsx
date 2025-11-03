@@ -54,8 +54,9 @@ export default function DeleteWorkspaceAlertDialog({
             Delete Workspace &quot;{workspace?.name}&quot;?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this{' '} 
-             <b>workspace</b> and all related <b>boards</b> and remove data from our servers.
+            This action cannot be undone. This will permanently delete this{' '}
+            <b>workspace</b> and all related <b>boards</b> and remove data from
+            our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

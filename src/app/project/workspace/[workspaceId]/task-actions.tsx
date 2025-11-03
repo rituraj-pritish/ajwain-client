@@ -46,12 +46,12 @@ export default function TaskActions({ task }: { task: Task }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-6 w-6 p-0">
-          <span className="sr-only">Open menu</span>
+        <Button variant='ghost' className='h-6 w-6 p-0'>
+          <span className='sr-only'>Open menu</span>
           <MoreHorizontal />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align='end'>
         <DropdownMenuItem
           onClick={(e) => {
             e.stopPropagation()
@@ -91,7 +91,7 @@ export default function TaskActions({ task }: { task: Task }) {
           </DropdownMenuPortal>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onClick={handleDelete}>
+        <DropdownMenuItem variant='destructive' onClick={handleDelete}>
           Delete Task
         </DropdownMenuItem>
       </DropdownMenuContent>

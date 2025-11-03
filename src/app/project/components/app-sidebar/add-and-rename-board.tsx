@@ -84,14 +84,14 @@ export default function AddAndRenameBoard({
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <form id="add-and-update-board-form">
-        <SheetContent side="bottom">
+      <form id='add-and-update-board-form'>
+        <SheetContent side='bottom'>
           <SheetHeader>
             <SheetTitle>{board ? 'Rename' : 'Add'} Board</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FieldGroup className='px-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
             <Controller
-              name="name"
+              name='name'
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
@@ -99,8 +99,8 @@ export default function AddAndRenameBoard({
                     <FieldLabel>Name</FieldLabel>
                     <Input
                       {...field}
-                      placeholder="Enter board name"
-                      data-testid="name"
+                      placeholder='Enter board name'
+                      data-testid='name'
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -110,19 +110,19 @@ export default function AddAndRenameBoard({
               }}
             />
           </FieldGroup>
-          <SheetFooter className="flex-row justify-end">
+          <SheetFooter className='flex-row justify-end'>
             <Button
-              type="submit"
-              id="add-and-update-board-form"
+              type='submit'
+              id='add-and-update-board-form'
               disabled={!form.formState.isValid || form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}
-              data-testid="add-and-update-board-form-submit-button"
+              data-testid='add-and-update-board-form-submit-button'
             >
               {form.formState.isSubmitting && <Spinner />}
               {board ? 'Update' : 'Add'} Board
             </Button>
             <SheetClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant='outline'>Cancel</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

@@ -12,7 +12,7 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { boardId } = await params
-  
+
   const response = await getBoard(boardId)
   const board = await response.json()
   return (
@@ -20,7 +20,7 @@ export default async function Page({ params }: Props) {
       <Header>
         <BreadcrumbsHeader board={board} />
       </Header>
-      <div className="container mx-auto p-4">
+      <div className='container mx-auto p-4'>
         <TasksTable tasks={board?.tasks} />
         <Task />
       </div>

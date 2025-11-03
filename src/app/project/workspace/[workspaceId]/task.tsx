@@ -99,17 +99,17 @@ export default function Task() {
 
   return (
     <Sheet open={!!taskId} onOpenChange={handleOpenChange}>
-      <form id="create-task">
-        <SheetContent side="bottom">
-          <SheetHeader className="flex-row justify-between">
+      <form id='create-task'>
+        <SheetContent side='bottom'>
+          <SheetHeader className='flex-row justify-between'>
             <SheetTitle>{details?.title}</SheetTitle>
             <span>
               <Controller
-                name="status"
+                name='status'
                 control={form.control}
                 render={({ field }) => {
                   return (
-                    <Field className="mr-8">
+                    <Field className='mr-8'>
                       <ChangeStatus {...field} />
                     </Field>
                   )
@@ -119,10 +119,10 @@ export default function Task() {
           </SheetHeader>
           {/* @ts-expect-error lack of solution */}
           <TaskFormFields form={form} />
-          <SheetFooter className="flex-row justify-end">
+          <SheetFooter className='flex-row justify-end'>
             <Button
-              type="submit"
-              id="create-task"
+              type='submit'
+              id='create-task'
               onClick={form.handleSubmit(handleSubmit)}
               disabled={form.formState.isSubmitting || !form.formState.isDirty}
             >
@@ -130,7 +130,7 @@ export default function Task() {
               Update Task
             </Button>
             <SheetClose asChild>
-              <Button variant="outline">Close</Button>
+              <Button variant='outline'>Close</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

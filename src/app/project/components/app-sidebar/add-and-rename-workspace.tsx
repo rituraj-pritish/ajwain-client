@@ -82,14 +82,14 @@ export default function AddAndRenameWorkspace({
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <form id="add-workspace-form">
-        <SheetContent side="bottom">
+      <form id='add-workspace-form'>
+        <SheetContent side='bottom'>
           <SheetHeader>
             <SheetTitle>{workspace ? 'Rename' : 'Add'} Workspace</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FieldGroup className='px-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
             <Controller
-              name="name"
+              name='name'
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
@@ -97,8 +97,8 @@ export default function AddAndRenameWorkspace({
                     <FieldLabel>Name</FieldLabel>
                     <Input
                       {...field}
-                      placeholder="Enter workspace name"
-                      data-testid="name"
+                      placeholder='Enter workspace name'
+                      data-testid='name'
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -108,19 +108,19 @@ export default function AddAndRenameWorkspace({
               }}
             />
           </FieldGroup>
-          <SheetFooter className="flex-row justify-end">
+          <SheetFooter className='flex-row justify-end'>
             <Button
-              type="submit"
-              id="add-workspace-form"
+              type='submit'
+              id='add-workspace-form'
               disabled={!form.formState.isValid || form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}
-              data-testid="add-workspace-form-submit-button"
+              data-testid='add-workspace-form-submit-button'
             >
               {form.formState.isSubmitting && <Spinner />}
               {workspace ? 'Update' : 'Add'} Workspace
             </Button>
             <SheetClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant='outline'>Cancel</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

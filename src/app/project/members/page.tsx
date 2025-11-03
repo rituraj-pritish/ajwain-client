@@ -13,8 +13,8 @@ export default async function Page() {
       <Header>
         <Breadcrumbs />
       </Header>
-      <div className="container mx-auto p-4">
-        <div className="mb-4 flex justify-end">
+      <div className='container mx-auto p-4'>
+        <div className='mb-4 flex justify-end'>
           <AddMember />
         </div>
         <MembersTable data={data} />

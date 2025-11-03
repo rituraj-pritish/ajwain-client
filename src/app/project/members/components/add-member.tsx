@@ -80,20 +80,20 @@ export default function AddMember() {
       <SheetTrigger onClick={() => setIsOpen(true)} asChild>
         <Button>Add Member</Button>
       </SheetTrigger>
-      <form id="create-member">
-        <SheetContent side="bottom">
+      <form id='create-member'>
+        <SheetContent side='bottom'>
           <SheetHeader>
             <SheetTitle>Add Member</SheetTitle>
           </SheetHeader>
-          <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FieldGroup className='px-4 grid grid-cols-1 md:grid-cols-2 gap-4'>
             <Controller
-              name="name"
+              name='name'
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
                   <Field>
                     <FieldLabel>Name</FieldLabel>
-                    <Input {...field} placeholder="Enter member name" />
+                    <Input {...field} placeholder='Enter member name' />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -102,13 +102,13 @@ export default function AddMember() {
               }}
             />
             <Controller
-              name="email"
+              name='email'
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
                   <Field>
                     <FieldLabel>Email</FieldLabel>
-                    <Input {...field} placeholder="Enter member email" />
+                    <Input {...field} placeholder='Enter member email' />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -117,13 +117,13 @@ export default function AddMember() {
               }}
             />
             <Controller
-              name="password"
+              name='password'
               control={form.control}
               render={({ field, fieldState }) => {
                 return (
                   <Field>
                     <FieldLabel>Password</FieldLabel>
-                    <Input {...field} placeholder="Enter member password" />
+                    <Input {...field} placeholder='Enter member password' />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -132,7 +132,7 @@ export default function AddMember() {
               }}
             />
             <Controller
-              name="role"
+              name='role'
               control={form.control}
               render={({ field }) => {
                 return (
@@ -141,16 +141,16 @@ export default function AddMember() {
                     <Select
                       {...field}
                       onValueChange={field.onChange}
-                      defaultValue="MEMBER"
+                      defaultValue='MEMBER'
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select Role" />
+                        <SelectValue placeholder='Select Role' />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="PROJECT_ADMIN">
+                        <SelectItem value='PROJECT_ADMIN'>
                           PROJECT ADMIN
                         </SelectItem>
-                        <SelectItem value="MEMBER">MEMBER</SelectItem>
+                        <SelectItem value='MEMBER'>MEMBER</SelectItem>
                       </SelectContent>
                     </Select>
                   </Field>
@@ -158,9 +158,9 @@ export default function AddMember() {
               }}
             />
           </FieldGroup>
-          <SheetFooter className="flex-row justify-end">
+          <SheetFooter className='flex-row justify-end'>
             <Button
-              id="create-member"
+              id='create-member'
               disabled={form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}
             >
@@ -168,7 +168,7 @@ export default function AddMember() {
               Add Member
             </Button>
             <SheetClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant='outline'>Cancel</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

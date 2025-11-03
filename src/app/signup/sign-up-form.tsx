@@ -59,31 +59,31 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="relative mt-16">
+    <div className='relative mt-16'>
       <Logo />
-      <span className="absolute right-[calc(50vw-182px)] top-0">
+      <span className='absolute right-[calc(50vw-182px)] top-0'>
         <ThemeToggle />
       </span>
-      <form id="sign-up-form" onSubmit={form.handleSubmit(handleSubmit)}>
-        <Card className="w-md mx-auto px-4 py-8 mt-6">
+      <form id='sign-up-form' onSubmit={form.handleSubmit(handleSubmit)}>
+        <Card className='w-md mx-auto px-4 py-8 mt-6'>
           <CardHeader>
-            <CardTitle className="mx-auto">
+            <CardTitle className='mx-auto'>
               Get Started With Your Project
             </CardTitle>
           </CardHeader>
           <CardContent>
             <FieldGroup>
               <Controller
-                name="projectName"
+                name='projectName'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
                     <Field>
                       <FieldLabel>Project Name</FieldLabel>
                       <Input
-                        data-testid="projectName"
+                        data-testid='projectName'
                         {...field}
-                        placeholder="Enter project name"
+                        placeholder='Enter project name'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -92,18 +92,18 @@ export default function SignUpForm() {
                   )
                 }}
               />
-              <Separator className="border-1" />
+              <Separator className='border-1' />
               <Controller
-                name="name"
+                name='name'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
                     <Field>
                       <FieldLabel>Name</FieldLabel>
                       <Input
-                        data-testid="name"
+                        data-testid='name'
                         {...field}
-                        placeholder="Enter user name"
+                        placeholder='Enter user name'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -113,16 +113,16 @@ export default function SignUpForm() {
                 }}
               />
               <Controller
-                name="email"
+                name='email'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
                     <Field>
                       <FieldLabel>Email</FieldLabel>
                       <Input
-                        data-testid="email"
+                        data-testid='email'
                         {...field}
-                        placeholder="Enter user email"
+                        placeholder='Enter user email'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -132,17 +132,17 @@ export default function SignUpForm() {
                 }}
               />
               <Controller
-                name="password"
+                name='password'
                 control={form.control}
                 render={({ field, fieldState }) => {
                   return (
                     <Field>
                       <FieldLabel>Password</FieldLabel>
                       <Input
-                        data-testid="password"
+                        data-testid='password'
                         {...field}
-                        type="password"
-                        placeholder="Enter user password"
+                        type='password'
+                        placeholder='Enter user password'
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -153,18 +153,18 @@ export default function SignUpForm() {
               />
             </FieldGroup>
           </CardContent>
-          <CardFooter className="flex-col">
+          <CardFooter className='flex-col'>
             <Button
-              className="w-full"
-              type="submit"
-              id="sign-up-form"
+              className='w-full'
+              type='submit'
+              id='sign-up-form'
               disabled={!form.formState.isValid || form.formState.isSubmitting}
             >
               {form.formState.isSubmitting && <Spinner />}
               Create Project
             </Button>
-            <FieldDescription className="px-6 pt-6 text-center">
-              Already have an account? <Link href="/signin">Sign in</Link>
+            <FieldDescription className='px-6 pt-6 text-center'>
+              Already have an account? <Link href='/signin'>Sign in</Link>
             </FieldDescription>
           </CardFooter>
         </Card>

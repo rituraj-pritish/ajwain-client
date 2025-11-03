@@ -45,7 +45,7 @@ export default function DataTable<TData, TValue>({
   const table = tableProp || tableLocal
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className='overflow-hidden rounded-md border'>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -82,7 +82,7 @@ export default function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className='h-24 text-center'>
                 No results.
               </TableCell>
             </TableRow>

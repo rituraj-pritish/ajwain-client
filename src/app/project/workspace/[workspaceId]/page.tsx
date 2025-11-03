@@ -20,7 +20,7 @@ export default async function Page({ params }: Props) {
       <Header>
         <BreadcrumbsHeader workspace={workspace} />
       </Header>
-      <div className="container mx-auto p-4"></div>
+      <div className='container mx-auto p-4'></div>
     </>
   )
 }

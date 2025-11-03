@@ -46,7 +46,7 @@ export default function ChangeStatus({ value, onChange }: Props) {
       <Tooltip>
         <TooltipTrigger asChild disabled={isPrevDisabled}>
           <Button
-            variant="outline"
+            variant='outline'
             disabled={isPrevDisabled}
             className='border-r-0'
             onClick={handlePrev}
@@ -58,18 +58,21 @@ export default function ChangeStatus({ value, onChange }: Props) {
           <p>{prevOption && toSentenceCase(snakeCaseToString(prevOption))}</p>
         </TooltipContent>
       </Tooltip>
-      <Separator orientation="vertical" />
+      <Separator orientation='vertical' />
       <Button
-        variant="outline"
-        className={cn('pointer-events-none !border-l w-[110px]', getClassName())}
+        variant='outline'
+        className={cn(
+          'pointer-events-none !border-l w-[110px]',
+          getClassName(),
+        )}
       >
         {value && toSentenceCase(snakeCaseToString(value))}
       </Button>
-      <Separator orientation="vertical" />
+      <Separator orientation='vertical' />
       <Tooltip>
         <TooltipTrigger asChild disabled={isNextDisabled}>
           <Button
-            variant="outline"
+            variant='outline'
             disabled={isNextDisabled}
             onClick={handleNext}
           >
