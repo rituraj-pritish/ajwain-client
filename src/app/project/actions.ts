@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 export async function getProjectDetails() {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/projects/details',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/projects/details',
       {
         method: 'GET',
         credentials: 'include',
@@ -22,7 +22,7 @@ export async function getProjectDetails() {
 export async function getUserDetails() {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/users/details',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/users/details',
       {
         method: 'GET',
         credentials: 'include',
@@ -40,7 +40,7 @@ export async function getUserDetails() {
 export async function getWorkspace(body: { id: number }) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/details',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/workspaces/details',
       {
         method: 'POST',
         headers: {

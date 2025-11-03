@@ -4,7 +4,7 @@ import { schema } from './sign-in-form'
 export async function signIn(body: z.infer<typeof schema>) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/users/signin',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/users/signin',
       {
         method: 'POST',
         credentials: 'include',

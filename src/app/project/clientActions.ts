@@ -1,7 +1,7 @@
 export async function logout() {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/users/logout',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/users/logout',
       {
         method: 'GET',
         credentials: 'include',
@@ -17,7 +17,7 @@ export async function logout() {
 export async function createWorkspace(body: { name: string }) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/create',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/workspaces/create',
       {
         method: 'POST',
         headers: {
@@ -35,7 +35,7 @@ export async function createWorkspace(body: { name: string }) {
 }
 
 export async function updateWorkspace(body: { id: number; name: string }) {
-  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/update', {
+  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/workspaces/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export async function updateWorkspace(body: { id: number; name: string }) {
 export async function deleteWorkspace(body: { id: number }) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/workspaces/delete',
+      process.env.NEXT_PUBLIC_API_BASE_URL + '/workspaces/delete',
       {
         method: 'DELETE',
         headers: {
@@ -66,7 +66,7 @@ export async function deleteWorkspace(body: { id: number }) {
 }
 
 export async function createBoard(body: { name: string; workspaceId: number }) {
-  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/boards/create', {
+  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/boards/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export async function createBoard(body: { name: string; workspaceId: number }) {
 }
 
 export async function updateBoard(body: { id: number; name: string }) {
-  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/boards/update', {
+  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/boards/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function updateBoard(body: { id: number; name: string }) {
 }
 
 export async function deleteBoard(id: number) {
-  return fetch(process.env.NEXT_PUBLIC_BASE_URL + `/boards/delete/${id}`, {
+  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + `/boards/delete/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   })

@@ -1,13 +1,13 @@
 describe('Authentication flows', () => {
-  const backendBaseUrl = 'http://localhost:3001'
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
   const projectAdminCredentialsFilePath =
     'cypress/fixtures/project-admin-credentials.json'
 
   before(() => {
     cy.readFile(projectAdminCredentialsFilePath).then((content) => {
       if (content.email) {
-        cy.request('POST', `${backendBaseUrl}/users/signin`, content)
-        cy.request('DELETE', `${backendBaseUrl}/projects/delete`)
+        cy.request('POST', `${apiBaseUrl}/users/signin`, content)
+        cy.request('DELETE', `${apiBaseUrl}/projects/delete`)
         cy.writeFile(projectAdminCredentialsFilePath, {})
       }
     })

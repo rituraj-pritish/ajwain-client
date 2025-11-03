@@ -2,7 +2,7 @@ import z from 'zod'
 import { schema } from './components/add-member'
 
 export async function createMember(body: z.infer<typeof schema>) {
-  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/users/create', {
+  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

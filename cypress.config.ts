@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     testIsolation: false,
     specPattern: [
       'cypress/e2e/authentication.cy.ts',
