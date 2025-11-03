@@ -28,7 +28,7 @@ export const schema = z.object({
 })
 
 export default function AddTask() {
-  const { workspaceId } = useParams()
+  const { boardId } = useParams()
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -46,7 +46,7 @@ export default function AddTask() {
     try {
       const response = await createTask({
         ...values,
-        workspaceId: Number(workspaceId),
+        boardId: Number(boardId),
         date: values.date,
         memberIds: values.memberIds
           .map(({ id }: { id: string }) => id)

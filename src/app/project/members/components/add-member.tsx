@@ -138,9 +138,13 @@ export default function AddMember() {
                 return (
                   <Field>
                     <FieldLabel>Role</FieldLabel>
-                    <Select defaultValue="MEMBER">
+                    <Select
+                      {...field}
+                      onValueChange={field.onChange}
+                      defaultValue="MEMBER"
+                    >
                       <SelectTrigger>
-                        <SelectValue {...field} placeholder="Select Role" />
+                        <SelectValue placeholder="Select Role" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="PROJECT_ADMIN">

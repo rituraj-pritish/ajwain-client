@@ -64,3 +64,32 @@ export async function deleteWorkspace(body: { id: number }) {
     throw error
   }
 }
+
+export async function createBoard(body: { name: string; workspaceId: number }) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/boards/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  })
+}
+
+export async function updateBoard(body: { id: number; name: string }) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/boards/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  })
+}
+
+export async function deleteBoard(id: number) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + `/boards/delete/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+}

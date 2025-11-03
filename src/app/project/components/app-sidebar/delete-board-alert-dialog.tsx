@@ -13,30 +13,28 @@ import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
 import { Item } from './nav-workspaces'
-import { deleteWorkspace } from '../../clientActions'
+import { deleteBoard } from '../../clientActions'
 
 interface Props {
-  workspace: Item | null
+  board: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }
 
-export default function DeleteWorkspaceAlertDialog({
-  workspace,
+export default function DeleteBoardAlertDialog({
+  board,
   isOpen,
   onOpenChange,
 }: Props) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
-  if (!workspace) return null
+  if (!board) return null
 
   const handleDelete = async () => {
     setIsLoading(true)
     try {
-      await deleteWorkspace({
-        id: workspace.id,
-      })
+      await deleteBoard(board.id)
       onOpenChange(false)
       router.refresh()
     } catch {
@@ -51,11 +49,12 @@ export default function DeleteWorkspaceAlertDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Delete Workspace &quot;{workspace?.name}&quot;?
+            Delete Board &quot;{board?.name}&quot;?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this{' '} 
-             <b>workspace</b> and all related <b>boards</b> and remove data from our servers.
+            This action cannot be undone. This will permanently delete this{' '}
+            <b>board</b> and all related <b>tasks</b> and remove data from our
+            servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

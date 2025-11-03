@@ -12,7 +12,6 @@ export default async function Layout({
 
   const userResponse = await getUserDetails()
   const userDetails = await userResponse.json()
-
   return (
     <SidebarProvider>
       <AppSidebar project={projectDetails} user={userDetails} />

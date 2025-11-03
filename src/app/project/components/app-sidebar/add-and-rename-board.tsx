@@ -20,12 +20,13 @@ import z from 'zod'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
-import { createWorkspace, updateWorkspace } from '../../clientActions'
 import { useEffect } from 'react'
 import { Item } from './nav-workspaces'
+import { createBoard, updateBoard } from '../../clientActions'
 
 interface Props {
   workspace: Item | null
+  board: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }
@@ -34,8 +35,9 @@ const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
 })
 
-export default function AddAndRenameWorkspace({
+export default function AddAndRenameBoard({
   workspace,
+  board,
   isOpen,
   onOpenChange,
 }: Props) {
@@ -49,21 +51,21 @@ export default function AddAndRenameWorkspace({
   })
 
   useEffect(() => {
-    form.reset({ name: workspace?.name || '' })
-  }, [workspace])
+    form.reset({ name: board?.name || '' })
+  }, [board])
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {
-      const response = workspace
-        ? await updateWorkspace({ ...values, id: Number(workspace.id) })
-        : await createWorkspace(values)
+      const response = board
+        ? await updateBoard({ ...values, id: Number(board.id) })
+        : await createBoard({ ...values, workspaceId: workspace.id })
       const data = await response.json()
 
       if (!response.ok && data.error) throw data
       router.refresh()
       onOpenChange(false)
       toast.success(
-        `${values.name} ${workspace ? 'updated' : 'created'} successfully.`,
+        `${values.name} ${board ? 'updated' : 'created'} successfully.`,
       )
     } catch (error: any) {
       if (error && error.message) {
@@ -82,10 +84,10 @@ export default function AddAndRenameWorkspace({
 
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <form id="add-workspace-form">
+      <form id="add-and-update-board-form">
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle>{workspace ? 'Rename' : 'Add'} Workspace</SheetTitle>
+            <SheetTitle>{board ? 'Rename' : 'Add'} Board</SheetTitle>
           </SheetHeader>
           <FieldGroup className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
@@ -97,7 +99,7 @@ export default function AddAndRenameWorkspace({
                     <FieldLabel>Name</FieldLabel>
                     <Input
                       {...field}
-                      placeholder="Enter workspace name"
+                      placeholder="Enter board name"
                       data-testid="name"
                     />
                     {fieldState.invalid && (
@@ -111,13 +113,13 @@ export default function AddAndRenameWorkspace({
           <SheetFooter className="flex-row justify-end">
             <Button
               type="submit"
-              id="add-workspace-form"
+              id="add-and-update-board-form"
               disabled={!form.formState.isValid || form.formState.isSubmitting}
               onClick={form.handleSubmit(handleSubmit)}
-              data-testid="add-workspace-form-submit-button"
+              data-testid="add-and-update-board-form-submit-button"
             >
               {form.formState.isSubmitting && <Spinner />}
-              {workspace ? 'Update' : 'Add'} Workspace
+              {board ? 'Update' : 'Add'} Board
             </Button>
             <SheetClose asChild>
               <Button variant="outline">Cancel</Button>

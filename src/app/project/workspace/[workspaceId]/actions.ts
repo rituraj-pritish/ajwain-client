@@ -1,7 +1,7 @@
 import { TaskStatus } from '@/types/task.interface'
 
 export async function createTask(body: {
-  workspaceId: number
+  boardId: number
   title: string
   description?: string
   date?: string

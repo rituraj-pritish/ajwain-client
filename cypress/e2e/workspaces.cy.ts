@@ -10,11 +10,21 @@ describe('workspace flows', () => {
     cy.get('[data-testid="add-workspace-form-submit-button"]').click()
   })
 
-  it('redirects to workspace', () => {
-    cy.contains('a[data-testid="nav-workspace-link"]', 'Frontend').click()
+  it('creates a board', () => {
+    cy.get('button[data-testid="workspace-menu-trigger"]').click()
+    cy.get('[data-testid="add-board-button"]').click()
+    cy.get('[data-testid="name"]').type('Frontend board')
 
-    cy.url().should('contain', '/project/workspace/')
-    cy.contains('[data-testid="breadcrumb"]', 'Frontend').should('be.visible')
+    cy.get('[data-testid="add-and-update-board-form-submit-button"]').click()
+  })
+
+  it('redirects to board', () => {
+    cy.contains('[data-testid="nav-workspace-collapsible"]', 'Frontend').click()
+    cy.get('[data-testid="nav-board-link"]')
+      .contains('span', 'Frontend board')
+      .click()
+
+    cy.url().should('match', /\/project\/workspace\/\d+\/board\/\d+/)
   })
 
   it('creates new task', () => {

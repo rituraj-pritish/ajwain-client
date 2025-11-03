@@ -1,7 +1,7 @@
-import Task from './task.interface'
+import Board from './board.interface'
 
 export default interface Workspace {
   id: number
   name: string
-  tasks: Task[]
+  boards: Board[]
 }

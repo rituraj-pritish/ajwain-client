@@ -28,36 +28,52 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import DeleteWorkspaceAlertDialog from './delete-workspace-alert-dialog'
-import './nav-workspaces.css'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import AddAndRenameBoard from './add-and-rename-board'
+import DeleteBoardAlertDialog from './delete-board-alert-dialog'
 
 interface Props {
   workspaces: Workspace[]
 }
 
-export interface Item extends Omit<Workspace, 'tasks'> {
+export interface Item extends Omit<Workspace, 'boards'> {
   url: string
   isActive: boolean
   items: Item[]
 }
 
+export enum OPEN_TYPES {
+  ADD_WORKSPACE = 'ADD_WORKSPACE',
+  RENAME_WORKSPACE = 'RENAME_WORKSPACE',
+  DELETE_WORKSPACE = 'DELTE_WORKSPACE',
+  ADD_BOARD = 'ADD_BOARD',
+  RENAME_BOARD = 'RENAME_BOARD',
+  DELETE_BOARD = 'DELTE_BOARD',
+}
+
 export default function NavWorkspaces({ workspaces }: Props) {
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [openType, setOpenType] = useState<OPEN_TYPES | null>(null)
   const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(null)
+  const [selectedBoard, setSelectedBoard] = useState<Item | null>(null)
 
   const pathName = usePathname()
 
-  const items: Item[] = workspaces?.map(({ id, name }) => ({
+  const items: Item[] = workspaces?.map(({ id, name, boards }) => ({
     id,
     name,
     url: `/project/workspace/${id}`,
     isActive: pathName === `/project/workspace/${id}`,
-    items: [],
+    items: boards.map((board) => ({
+      id: board.id,
+      name: board.name,
+      url: `/project/workspace/${id}/board/${board.id}`,
+      isActive: pathName === `/project/workspace/${id}/board/${board.id}`,
+    })),
   }))
 
   return (
@@ -65,11 +81,11 @@ export default function NavWorkspaces({ workspaces }: Props) {
       <SidebarGroup>
         <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
         <SidebarGroupAction
-          onClick={() => setIsSheetOpen(true)}
-          data-testid="add-workspace-button"
+          onClick={() => setOpenType(OPEN_TYPES.ADD_WORKSPACE)}
+          data-testid='add-workspace-button'
         >
           <Tooltip>
-            <TooltipTrigger asChild className="cursor-pointer">
+            <TooltipTrigger asChild className='cursor-pointer'>
               <Plus size={14} />
             </TooltipTrigger>
             <TooltipContent>
@@ -79,40 +95,57 @@ export default function NavWorkspaces({ workspaces }: Props) {
         </SidebarGroupAction>
         <SidebarMenu>
           {items?.map((item) => (
-            <Collapsible key={item.name} asChild defaultOpen={item.isActive}>
-              <SidebarMenuItem className="menu-item">
-                <SidebarMenuButton
-                  asChild
-                  tooltip={item.name}
-                  isActive={item.isActive}
-                >
-                  <Link href={item.url} data-testid="nav-workspace-link">
+            <Collapsible
+              className='group/collapsible'
+              key={item.id}
+              asChild
+              defaultOpen={item.isActive}
+              data-testid='nav-workspace-collapsible'
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.name}
+                    isActive={item.isActive}
+                  >
                     <span>{item.name}</span>
-                  </Link>
-                </SidebarMenuButton>
-
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     asChild
-                    className="menu-trigger p-0.5 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-950"
+                    className='p-0.5 mr-5.5 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-950'
+                    data-testid='workspace-menu-trigger'
                   >
                     <SidebarMenuAction>
                       <MoreHorizontal />
                     </SidebarMenuAction>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent side="right" align="start">
+                  <DropdownMenuContent side='right' align='start'>
                     <DropdownMenuItem
                       onClick={() => {
                         setSelectedWorkspace(item)
-                        setIsSheetOpen(true)
+                        setOpenType(OPEN_TYPES.ADD_BOARD)
                       }}
+                      data-testid='add-board-button'
                     >
-                      <span>Rename Workspace</span>
+                      <span>Add Board</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
                         setSelectedWorkspace(item)
-                        setIsAlertOpen(true)
+                        setOpenType(OPEN_TYPES.RENAME_WORKSPACE)
+                      }}
+                    >
+                      <span>Rename Workspace</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      variant='destructive'
+                      onClick={() => {
+                        setSelectedWorkspace(item)
+                        setOpenType(OPEN_TYPES.DELETE_WORKSPACE)
                       }}
                     >
                       <span>Delete Workspace</span>
@@ -122,21 +155,56 @@ export default function NavWorkspaces({ workspaces }: Props) {
 
                 {item.items?.length ? (
                   <>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuAction className="data-[state=open]:rotate-90">
-                        <ChevronRight />
-                        <span className="sr-only">Toggle</span>
-                      </SidebarMenuAction>
-                    </CollapsibleTrigger>
+                    <SidebarMenuAction>
+                      <ChevronRight className='group-data-[state=open]/collapsible:rotate-90' />
+                      <span className='sr-only'>Toggle</span>
+                    </SidebarMenuAction>
                     <CollapsibleContent>
                       <SidebarMenuSub>
                         {item.items?.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.name}>
-                            <SidebarMenuSubButton asChild>
-                              <a href={subItem.url}>
+                          <SidebarMenuSubItem key={subItem.id}>
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={subItem.isActive}
+                            >
+                              <Link
+                                href={subItem.url}
+                                data-testid='nav-board-link'
+                              >
                                 <span>{subItem.name}</span>
-                              </a>
+                              </Link>
                             </SidebarMenuSubButton>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger
+                                asChild
+                                className='p-0.5 top-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-950'
+                              >
+                                <SidebarMenuAction>
+                                  <MoreHorizontal />
+                                </SidebarMenuAction>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent side='right' align='start'>
+                                <DropdownMenuItem
+                                  onClick={() => {
+                                    setSelectedBoard(subItem)
+                                    setOpenType(OPEN_TYPES.RENAME_BOARD)
+                                  }}
+                                >
+                                  <span>Rename Board</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                  variant='destructive'
+                                  onClick={() => {
+                                    setSelectedWorkspace(item)
+                                    setSelectedBoard(subItem)
+                                    setOpenType(OPEN_TYPES.DELETE_BOARD)
+                                  }}
+                                >
+                                  <span>Delete Board</span>
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </SidebarMenuSubItem>
                         ))}
                       </SidebarMenuSub>
@@ -148,20 +216,52 @@ export default function NavWorkspaces({ workspaces }: Props) {
           ))}
         </SidebarMenu>
       </SidebarGroup>
+
       <AddAndRenameWorkspace
         workspace={selectedWorkspace}
-        isOpen={isSheetOpen}
+        isOpen={
+          !!(
+            openType &&
+            [OPEN_TYPES.ADD_WORKSPACE, OPEN_TYPES.RENAME_WORKSPACE].includes(
+              openType,
+            )
+          )
+        }
         onOpenChange={() => {
-          setIsSheetOpen(false)
+          setOpenType(null)
           setSelectedWorkspace(null)
         }}
       />
       <DeleteWorkspaceAlertDialog
         workspace={selectedWorkspace}
-        isOpen={isAlertOpen}
+        isOpen={openType === OPEN_TYPES.DELETE_WORKSPACE}
         onOpenChange={() => {
-          setIsAlertOpen(false)
+          setOpenType(null)
           setSelectedWorkspace(null)
+        }}
+      />
+
+      <AddAndRenameBoard
+        workspace={selectedWorkspace}
+        board={selectedBoard}
+        isOpen={
+          !!(
+            openType &&
+            [OPEN_TYPES.ADD_BOARD, OPEN_TYPES.RENAME_BOARD].includes(openType)
+          )
+        }
+        onOpenChange={() => {
+          setOpenType(null)
+          setSelectedWorkspace(null)
+          setSelectedBoard(null)
+        }}
+      />
+      <DeleteBoardAlertDialog
+        board={selectedBoard}
+        isOpen={openType === OPEN_TYPES.DELETE_BOARD}
+        onOpenChange={() => {
+          setOpenType(null)
+          setSelectedBoard(null)
         }}
       />
     </>
