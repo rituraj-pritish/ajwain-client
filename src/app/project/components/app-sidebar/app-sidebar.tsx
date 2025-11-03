@@ -13,13 +13,14 @@ import NavSecondary from './nav-secondary'
 import { Separator } from '@/components/ui/separator'
 
 interface Props {
+  className: string
   project: Project
   user: User
 }
 
-export default function AppSidebar({ project, user }: Props) {
+export default function AppSidebar({ className, project, user }: Props) {
   return (
-    <Sidebar>
+    <Sidebar className={className}>
       <SidebarHeader className='flex flex-row my-0.5'>
         <div className='bg-sidebar-primary dark:bg-primary text-sidebar-primary-foreground dark:text-primary-foreground flex aspect-square size-10 items-center justify-center rounded-lg'>
           {project?.name?.charAt(0)?.toUpperCase()}

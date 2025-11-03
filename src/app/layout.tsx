@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Ajwain',
+  title: 'AJWAIN',
   description: 'Project Management Tool',
 }
 

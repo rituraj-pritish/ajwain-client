@@ -61,9 +61,6 @@ export default function SignUpForm() {
   return (
     <div className='relative mt-16'>
       <Logo />
-      <span className='absolute right-[calc(50vw-182px)] top-0'>
-        <ThemeToggle />
-      </span>
       <form id='sign-up-form' onSubmit={form.handleSubmit(handleSubmit)}>
         <Card className='w-md mx-auto px-4 py-8 mt-6'>
           <CardHeader>
