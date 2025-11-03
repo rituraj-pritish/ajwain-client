@@ -41,10 +41,14 @@ interface Props {
   workspaces: Workspace[]
 }
 
-export interface Item extends Omit<Workspace, 'boards'> {
+export type SubItem = Omit<Item, 'items'>
+
+export interface Item {
+  id: number
+  name: string
   url: string
   isActive: boolean
-  items: Item[]
+  items: Omit<Item, 'items'>[]
 }
 
 export enum OPEN_TYPES {
@@ -59,7 +63,7 @@ export enum OPEN_TYPES {
 export default function NavWorkspaces({ workspaces }: Props) {
   const [openType, setOpenType] = useState<OPEN_TYPES | null>(null)
   const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(null)
-  const [selectedBoard, setSelectedBoard] = useState<Item | null>(null)
+  const [selectedBoard, setSelectedBoard] = useState<SubItem | null>(null)
 
   const pathName = usePathname()
 

@@ -8,7 +8,7 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path)
 
   const cookie = await cookies()
-  const auth = cookie.get('token')
+  const auth = cookie.get(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME || '')
 
   if (isProtectedRoute && !auth) {
     return NextResponse.redirect(new URL('/signin', req.nextUrl))

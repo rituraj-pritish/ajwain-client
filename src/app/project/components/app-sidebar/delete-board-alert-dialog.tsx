@@ -12,11 +12,11 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
-import { Item } from './nav-workspaces'
+import { SubItem } from './nav-workspaces'
 import { deleteBoard } from '../../clientActions'
 
 interface Props {
-  board: Item | null
+  board: SubItem | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }

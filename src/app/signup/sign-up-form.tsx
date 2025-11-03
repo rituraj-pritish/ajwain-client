@@ -26,7 +26,6 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '../components/logo'
-import ThemeToggle from '../components/theme-toggle'
 
 export const schema = z.object({
   projectName: z.string().min(1, 'Please enter project name'),

@@ -13,7 +13,7 @@ import NavSecondary from './nav-secondary'
 import { Separator } from '@/components/ui/separator'
 
 interface Props {
-  className: string
+  className?: string
   project: Project
   user: User
 }

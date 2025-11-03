@@ -21,12 +21,12 @@ import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { Item } from './nav-workspaces'
+import { Item, SubItem } from './nav-workspaces'
 import { createBoard, updateBoard } from '../../clientActions'
 
 interface Props {
   workspace: Item | null
-  board: Item | null
+  board: SubItem | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
 }
@@ -52,7 +52,10 @@ export default function AddAndRenameBoard({
 
   useEffect(() => {
     form.reset({ name: board?.name || '' })
+    // eslint-disable-next-line
   }, [board])
+
+  if (!workspace) return null
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
     try {

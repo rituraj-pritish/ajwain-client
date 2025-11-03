@@ -8,6 +8,8 @@ import BreadcrumbsHeader from './project/components/breadcrumbs'
 import TasksTable from './project/workspace/[workspaceId]/tasks-table'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
+import { TaskStatus } from '@/types/task.interface'
+import { UserRole } from '@/types/user.interface'
 
 const DATA = {
   project: {
@@ -17,7 +19,6 @@ const DATA = {
       {
         id: 1,
         name: 'Frontend',
-        isActive: true,
         boards: [
           {
             id: 1,
@@ -31,6 +32,7 @@ const DATA = {
     id: 1,
     name: 'John Doe',
     email: 'johndoe@workemail.com',
+    role: UserRole.PROJECT_ADMIN,
   },
   board: {
     id: 1,
@@ -43,17 +45,20 @@ const DATA = {
       {
         id: 1,
         title: 'Update toggle button',
-        status: 'COMPLETED',
+        status: TaskStatus.COMPLETED,
+        date: '',
       },
       {
         id: 2,
         title: 'Deploy to staging',
-        status: 'IN_PROGRESS',
+        status: TaskStatus.IN_PROGRESS,
+        date: '',
       },
       {
         id: 3,
         title: 'Deploy to production',
-        status: 'PENDING',
+        status: TaskStatus.PENDING,
+        date: '',
       },
     ],
   },
@@ -99,11 +104,13 @@ export default async function Page() {
           <SidebarProvider>
             <AppSidebar
               className='data-[slot=sidebar-container]:relative data-[slot=sidebar-container]:max-h-[70vh]'
+              // @ts-expect-error using dummy data
               project={DATA.project}
               user={DATA.user}
             />
             <SidebarInset>
               <Header>
+                {/* @ts-expect-error using dummy data */}
                 <BreadcrumbsHeader board={DATA.board} />
               </Header>
               <div className='container mx-auto p-4'>

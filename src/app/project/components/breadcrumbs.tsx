@@ -10,23 +10,18 @@ import {
 import Board from '@/types/board.interface'
 import Workspace from '@/types/workspace.interface'
 
-interface BoardProp {
-  workspace: never
-  board: Board
+interface Props {
+  workspace?: Workspace
+  board?: Board
 }
 
-interface WorkspaceProp {
-  workspace: Workspace
-  board: never
-}
-
-export default function BreadcrumbsHeader(props: BoardProp | WorkspaceProp) {
-  if ('workspace' in props) {
+export default function BreadcrumbsHeader({ board, workspace }: Props) {
+  if (workspace) {
     return (
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem className='hidden md:block' data-testid='breadcrumb'>
-            {props.workspace.name}
+            {workspace.name}
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -37,11 +32,11 @@ export default function BreadcrumbsHeader(props: BoardProp | WorkspaceProp) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem className='hidden md:block' data-testid='breadcrumb'>
-          {props?.board?.workspace?.name}
+          {board?.workspace?.name}
         </BreadcrumbItem>
         <BreadcrumbSeparator className='hidden md:block' />
         <BreadcrumbItem>
-          <BreadcrumbPage>{props?.board?.name}</BreadcrumbPage>
+          <BreadcrumbPage>{board?.name}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

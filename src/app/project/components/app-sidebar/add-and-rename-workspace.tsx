@@ -50,6 +50,7 @@ export default function AddAndRenameWorkspace({
 
   useEffect(() => {
     form.reset({ name: workspace?.name || '' })
+    // eslint-disable-next-line
   }, [workspace])
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
