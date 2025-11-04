@@ -7,7 +7,7 @@ export async function createTask(body: {
   date?: string
   memberIds?: string
 }) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/tasks/create', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/tasks/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export async function updateTask(body: {
   date?: string | null
   memberIds?: string
 }) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/tasks/update', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/tasks/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export async function updateTaskStatus(body: {
   id: number
   status: TaskStatus
 }) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/tasks/status/update', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/tasks/status/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export async function updateTaskStatus(body: {
 }
 
 export async function getTask(body: { id: string }) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/tasks/details', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/tasks/details', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -60,14 +60,14 @@ export async function getTask(body: { id: string }) {
 }
 
 export async function getUsers() {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/all', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/users/all', {
     method: 'GET',
     credentials: 'include',
   })
 }
 
 export async function deleteTask(body: { id: number }) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/tasks/delete', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/tasks/delete', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

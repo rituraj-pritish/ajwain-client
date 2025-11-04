@@ -2,7 +2,7 @@ import z from 'zod'
 import { schema } from './sign-up-form'
 
 export async function signUp(body: z.infer<typeof schema>) {
-  return fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/projects/create', {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/projects/create', {
     method: 'POST',
     credentials: 'include',
     headers: {
