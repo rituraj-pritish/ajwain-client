@@ -11,6 +11,7 @@ import NavWorkspaces from './nav-workspaces'
 import { NavUser } from './nav-user'
 import NavSecondary from './nav-secondary'
 import { Separator } from '@/components/ui/separator'
+import Loading from './loading'
 
 interface Props {
   className?: string
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export default function AppSidebar({ className, project, user }: Props) {
+  if (!project || !user) return <Loading />
+
   return (
     <Sidebar className={className}>
       <SidebarHeader className='flex flex-row my-0.5'>
@@ -26,7 +29,9 @@ export default function AppSidebar({ className, project, user }: Props) {
           {project?.name?.charAt(0)?.toUpperCase()}
         </div>
         <div className='flex flex-col justify-between gap-1 leading-none'>
-          <span className='text-md font-semibold'>{project?.name}</span>
+          <span className='truncate text-md font-semibold'>
+            {project?.name}
+          </span>
           <span className='flex items-baseline'>
             <span className='text-[10px] font-extralight'>powered by</span>
             <span className='text-xs ml-1 font-extralight tracking-widest'>

@@ -45,7 +45,7 @@ Cypress.Commands.add('login', (name: string, password: string) => {
       cy.get('[data-testid="password"').type('password')
 
       cy.get('#sign-in-form').submit()
-
+      cy.wait(1000)
       cy.url().should('contain', '/project')
     },
     {

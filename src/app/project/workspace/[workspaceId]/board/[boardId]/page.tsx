@@ -3,6 +3,7 @@ import { getBoard } from './actions'
 import BreadcrumbsHeader from '@/app/project/components/breadcrumbs'
 import TasksTable from '../../tasks-table'
 import Task from '../../task'
+import Loading from './loading'
 
 interface Props {
   params: {
@@ -15,12 +16,13 @@ export default async function Page({ params }: Props) {
 
   const response = await getBoard(boardId)
   const board = await response.json()
+
   return (
     <>
       <Header>
         <BreadcrumbsHeader board={board} />
       </Header>
-      <div className='container mx-auto p-4'>
+      <div className='container p-4'>
         <TasksTable tasks={board?.tasks} />
         <Task />
       </div>

@@ -2,6 +2,15 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import AppSidebar from './components/app-sidebar/app-sidebar'
 import { getProjectDetails, getUserDetails } from './actions'
 
+export async function generateMetadata() {
+  const projectResponse = await getProjectDetails()
+  const projectDetails = await projectResponse.json()
+
+  return {
+    title: projectDetails.name,
+  }
+}
+
 export default async function Layout({
   children,
 }: {
