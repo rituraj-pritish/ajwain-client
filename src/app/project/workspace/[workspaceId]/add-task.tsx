@@ -53,7 +53,6 @@ export default function AddTask() {
           .join(','),
       })
       const data = await response.json()
-
       if (!response.ok && data.error) throw data
       router.refresh()
       setIsOpen(false)
