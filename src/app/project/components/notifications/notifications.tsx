@@ -33,7 +33,7 @@ export default function Notifications() {
     const eventSource = new EventSource('/api/notifications/stream')
 
     eventSource.onmessage = ({ data }) => {
-      setNotifications((prevData) => [data, ...prevData])
+      setNotifications((prevData) => [JSON.parse(data), ...prevData])
     }
 
     return () => {
@@ -68,10 +68,10 @@ export default function Notifications() {
               <TabsTrigger value='archived'>Archived</TabsTrigger>
             </TabsList>
           </span>
-          <TabsContent value='unread'>
+          <TabsContent className='overflow-auto' value='unread'>
             <NotificationItems items={unreadNotifications} />
           </TabsContent>
-          <TabsContent value='archived'>
+          <TabsContent className='overflow-auto' value='archived'>
             <NotificationItems items={archivedNotifications} />
           </TabsContent>
         </Tabs>

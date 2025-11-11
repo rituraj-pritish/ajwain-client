@@ -22,7 +22,7 @@ export default async function Page({ params }: Props) {
       <Header>
         <BreadcrumbsHeader board={board} />
       </Header>
-      <div className='container p-4'>
+      <div className='container p-4 mx-auto'>
         <TasksTable tasks={board?.tasks} />
         <Task />
       </div>

@@ -7,12 +7,12 @@ export default function Loading() {
       <Header>
         <Skeleton className='h-5 w-40' />
       </Header>
-      <div className='p-4'>
-        <div className='w-full flex gap-4 mb-4 min-w-[50vw]'>
+      <div className='p-4 mx-auto'>
+        <div className='w-full flex gap-4 mb-4 min-w-[70vw]'>
           <Skeleton className='grow h-9' />
           <Skeleton className='w-25 h-9' />
         </div>
-        <Skeleton className='w-full h-[200px] min-w-[50vw]' />
+        <Skeleton className='w-full h-[200px] min-w-[70vw]' />
       </div>
     </>
   )

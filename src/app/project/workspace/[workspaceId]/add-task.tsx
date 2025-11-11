@@ -47,16 +47,17 @@ export default function AddTask() {
       const response = await createTask({
         ...values,
         boardId: Number(boardId),
-        date: values.date,
+        date: 'date' in values ? values.date : undefined,
         memberIds: values.memberIds
           .map(({ id }: { id: string }) => id)
           .join(','),
       })
+
       const data = await response.json()
       if (!response.ok && data.error) throw data
-      router.refresh()
       setIsOpen(false)
       form.reset()
+      router.refresh()
       toast.success('Task added successfully.')
     } catch {
       toast.error('Something went wrong. Please try again.')

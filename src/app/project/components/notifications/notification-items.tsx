@@ -20,6 +20,7 @@ export default function NotificationItems({
         No notifications yet
       </p>
     )
+
   return (
     <ItemGroup>
       {items.map((item, index) => (
