@@ -19,7 +19,6 @@ import { Controller, useForm } from 'react-hook-form'
 import z from 'zod'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
-import { useRouter } from 'next/navigation'
 import { createWorkspace, updateWorkspace } from '../../clientActions'
 import { useEffect } from 'react'
 import { Item } from './nav-workspaces'
@@ -28,6 +27,7 @@ interface Props {
   workspace: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
+  refreshData: () => void
 }
 
 const schema = z.object({
@@ -38,8 +38,8 @@ export default function AddAndRenameWorkspace({
   workspace,
   isOpen,
   onOpenChange,
+  refreshData,
 }: Props) {
-  const router = useRouter()
   const form = useForm({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
@@ -61,7 +61,7 @@ export default function AddAndRenameWorkspace({
       const data = await response.json()
 
       if (!response.ok && data.error) throw data
-      router.refresh()
+      refreshData()
       onOpenChange(false)
       toast.success(
         `${values.name} ${workspace ? 'updated' : 'created'} successfully.`,

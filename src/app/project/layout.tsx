@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import AppSidebar from './components/app-sidebar/app-sidebar'
-import { getProjectDetails, getUserDetails } from './actions'
+import { getProjectDetails } from './actions'
 
 export async function generateMetadata() {
   const projectResponse = await getProjectDetails()
@@ -11,19 +11,10 @@ export async function generateMetadata() {
   }
 }
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const projectResponse = await getProjectDetails()
-  const projectDetails = await projectResponse.json()
-
-  const userResponse = await getUserDetails()
-  const userDetails = await userResponse.json()
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <AppSidebar project={projectDetails} user={userDetails} />
+      <AppSidebar />
       <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   )
