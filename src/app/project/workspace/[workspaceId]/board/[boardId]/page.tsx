@@ -2,7 +2,6 @@ import Header from '@/app/project/components/header'
 import { getBoard } from './actions'
 import BreadcrumbsHeader from '@/app/project/components/breadcrumbs'
 import TasksTable from '../../tasks-table'
-import Task from '../../task'
 import { notFound } from 'next/navigation'
 
 interface Props {
@@ -35,7 +34,6 @@ export default async function Page({ params }: Props) {
       </Header>
       <div className='container p-4 mx-auto'>
         <TasksTable tasks={board?.tasks} />
-        <Task />
       </div>
     </>
   )

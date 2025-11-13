@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { createMember } from '../clientActions'
+import useGlobalData from '../../useGlobalData'
 
 export const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
@@ -41,6 +42,7 @@ export const schema = z.object({
 })
 
 export default function AddMember() {
+  const { users, updateData } = useGlobalData()
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
@@ -63,8 +65,11 @@ export default function AddMember() {
       if (!response.ok && data.error) throw data
       router.refresh()
       setIsOpen(false)
+
       form.reset()
       toast.success(`${values.name} member added successfully.`)
+
+      updateData('users', [...users, data])
     } catch {
       toast.error('Something went wrong. Please try again.')
     }

@@ -21,6 +21,10 @@ import TaskFormFields from './task-form-fields'
 import TaskType, { TaskStatus } from '@/types/task.interface'
 import ChangeStatus from './change-status'
 import { Field } from '@/components/ui/field'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Comments from './comments'
+import { Skeleton } from '@/components/ui/skeleton'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export const schema = z.object({
   title: z.string().min(1, 'Please enter task title'),
@@ -36,6 +40,7 @@ export default function Task() {
   const router = useRouter()
 
   const [details, setDetails] = useState<TaskType | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm({
     mode: 'onSubmit',
@@ -50,6 +55,7 @@ export default function Task() {
   const taskId = searchParams.get('taskId')
 
   const getDetails = async (id: string) => {
+    setIsLoading(true)
     const res = await getTask({ id })
     const data = await res.json()
 
@@ -58,6 +64,7 @@ export default function Task() {
       memberIds: data.members,
     })
     setDetails(data)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -90,7 +97,7 @@ export default function Task() {
   const handleOpenChange = (state: boolean) => {
     if (!state) {
       form.reset()
-      router.replace(pathName)
+      window.history.replaceState(null, '', pathName)
       setDetails(null)
     }
   }
@@ -99,42 +106,81 @@ export default function Task() {
 
   return (
     <Sheet open={!!taskId} onOpenChange={handleOpenChange}>
-      <form id='update-task'>
-        <SheetContent side='bottom'>
-          <SheetHeader className='flex-row justify-between'>
-            <SheetTitle>{details?.title}</SheetTitle>
-            <span>
-              <Controller
-                name='status'
-                control={form.control}
-                render={({ field }) => {
-                  return (
-                    <Field className='mr-8'>
-                      <ChangeStatus {...field} />
-                    </Field>
-                  )
-                }}
-              />
-            </span>
-          </SheetHeader>
-          {/* @ts-expect-error lack of solution */}
-          <TaskFormFields form={form} />
-          <SheetFooter className='flex-row justify-end'>
-            <Button
-              type='submit'
-              id='update-task'
-              onClick={form.handleSubmit(handleSubmit)}
-              disabled={form.formState.isSubmitting || !form.formState.isDirty}
-            >
-              {form.formState.isSubmitting && <Spinner />}
-              Update Task
-            </Button>
-            <SheetClose asChild>
-              <Button variant='outline'>Close</Button>
-            </SheetClose>
-          </SheetFooter>
-        </SheetContent>
-      </form>
+      <Tabs defaultValue='task'>
+        <form id='update-task'>
+          <SheetContent side='bottom'>
+            <SheetHeader className='flex-row justify-between'>
+              <SheetTitle>
+                {isLoading ? <Skeleton className='h-8 w-40' /> : details?.title}
+              </SheetTitle>
+              <span>
+                {isLoading ? (
+                  <Skeleton className='h-8 w-40 mr-8' />
+                ) : (
+                  <Controller
+                    name='status'
+                    control={form.control}
+                    render={({ field }) => {
+                      return (
+                        <Field className='mr-8'>
+                          <ChangeStatus {...field} />
+                        </Field>
+                      )
+                    }}
+                  />
+                )}
+              </span>
+            </SheetHeader>
+
+            <TabsContent value='task'>
+              <ScrollArea className='h-[60vh] max-h-[70vh]'>
+                {isLoading ? (
+                  <span className='px-4 grid grid-cols-24 gap-8'>
+                    <Skeleton className='h-12 col-span-24 md:col-span-15 lg:col-span-17 xl:col-span-18' />
+                    <Skeleton className='col-span-12 order-4 md:order-none md:col-span-9 lg:col-span-7 xl:col-span-6 w-full' />
+                    <Skeleton className='h-60 md:h-[unset] col-span-24 md:col-span-15 lg:col-span-17 xl:col-span-18' />
+                    <Skeleton className='h-100 col-span-12 md:col-span-9 lg:col-span-7 xl:col-span-6' />
+                  </span>
+                ) : (
+                  //  @ts-expect-error lack of solution
+                  <TaskFormFields form={form} />
+                )}
+              </ScrollArea>
+            </TabsContent>
+
+            <TabsContent value='comments'>
+              <Comments />
+            </TabsContent>
+
+            <SheetFooter className='flex-row justify-between'>
+              {isLoading ? (
+                <Skeleton className='h-8 w-40' />
+              ) : (
+                <TabsList>
+                  <TabsTrigger value='task'>Task</TabsTrigger>
+                  <TabsTrigger value='comments'>Comments</TabsTrigger>
+                </TabsList>
+              )}
+              <span className='flex gap-4'>
+                <Button
+                  type='submit'
+                  id='update-task'
+                  onClick={form.handleSubmit(handleSubmit)}
+                  disabled={
+                    form.formState.isSubmitting || !form.formState.isDirty
+                  }
+                >
+                  {form.formState.isSubmitting && <Spinner />}
+                  Update Task
+                </Button>
+                <SheetClose asChild>
+                  <Button variant='outline'>Close</Button>
+                </SheetClose>
+              </span>
+            </SheetFooter>
+          </SheetContent>
+        </form>
+      </Tabs>
     </Sheet>
   )
 }

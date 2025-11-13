@@ -24,18 +24,16 @@ import {
 } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import User from '@/types/user.interface'
+import useGlobalData from '../../useGlobalData'
 
 interface Props {
-  users: User[]
   value: User[]
   onChange: (users: User[]) => void
 }
 
-export default function MemberSelector({
-  users = [],
-  value = [],
-  onChange,
-}: Props) {
+export default function MemberSelector({ value = [], onChange }: Props) {
+  const { users } = useGlobalData()
+
   const handleSelect = (user: User) => {
     onChange([...value, user])
   }

@@ -1,7 +1,7 @@
 'use client'
 import { Input } from '@/components/ui/input'
 import AddTask from './add-task'
-import Task, { TaskStatus } from '@/types/task.interface'
+import TaskType, { TaskStatus } from '@/types/task.interface'
 import {
   ColumnDef,
   getCoreRowModel,
@@ -15,12 +15,13 @@ import dayjs from 'dayjs'
 import TaskActions from './task-actions'
 import { DataTablePagination } from '../../components/data-table-pagination'
 import { Row } from '@tanstack/react-table'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import DataTable from '../../components/data-table'
 import { useState } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
+import Task from './task'
 
-const columns: ColumnDef<Task>[] = [
+const columns: ColumnDef<TaskType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -112,11 +113,10 @@ const columns: ColumnDef<Task>[] = [
   },
 ]
 
-export default function TasksTable({ tasks }: { tasks: Task[] }) {
+export default function TasksTable({ tasks }: { tasks: TaskType[] }) {
   const [rowSelection, setRowSelection] = useState({})
 
   const pathName = usePathname()
-  const router = useRouter()
 
   const table = useReactTable({
     data: tasks,
@@ -130,12 +130,13 @@ export default function TasksTable({ tasks }: { tasks: Task[] }) {
     },
   })
 
-  const setRowProps = (row: Row<Task>) => {
+  const setRowProps = (row: Row<TaskType>) => {
     const taskId = row.original.id
 
     return {
       className: 'cursor-pointer',
-      onClick: () => router.replace(`${pathName}?taskId=${taskId}`),
+      onClick: () =>
+        window.history.replaceState(null, '', `${pathName}?taskId=${taskId}`),
     }
   }
 
@@ -156,6 +157,7 @@ export default function TasksTable({ tasks }: { tasks: Task[] }) {
       <div className='mt-4'>
         <DataTablePagination table={table} />
       </div>
+      <Task />
     </>
   )
 }

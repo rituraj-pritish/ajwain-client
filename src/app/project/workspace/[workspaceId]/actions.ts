@@ -76,3 +76,21 @@ export async function deleteTask(body: { id: number }) {
     body: JSON.stringify(body),
   })
 }
+
+export async function getComments(id: string) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/comments/all/' + id, {
+    method: 'GET',
+    credentials: 'include',
+  })
+}
+
+export async function createComment(body: { taskId: number, content: string,  }) {
+  return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/comments/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  })
+}
