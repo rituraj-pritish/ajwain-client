@@ -2,67 +2,8 @@ import ThemeToggle from './components/theme-toggle'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Logo from './components/logo'
-import AppSidebar from './project/components/app-sidebar/app-sidebar'
-import Header from './project/components/header'
-import BreadcrumbsHeader from './project/components/breadcrumbs'
-import TasksTable from './project/workspace/[workspaceId]/tasks-table'
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
-import { TaskStatus } from '@/types/task.interface'
-import { UserRole } from '@/types/user.interface'
-
-const DATA = {
-  project: {
-    id: 1,
-    name: 'My Project',
-    workspaces: [
-      {
-        id: 1,
-        name: 'Frontend',
-        boards: [
-          {
-            id: 1,
-            name: 'Feature',
-          },
-        ],
-      },
-    ],
-  },
-  user: {
-    id: 1,
-    name: 'John Doe',
-    email: 'johndoe@workemail.com',
-    role: UserRole.PROJECT_ADMIN,
-  },
-  board: {
-    id: 1,
-    name: 'Feature',
-    workspace: {
-      id: 1,
-      name: 'Frontend',
-    },
-    tasks: [
-      {
-        id: 1,
-        title: 'Update toggle button',
-        status: TaskStatus.COMPLETED,
-        date: '',
-      },
-      {
-        id: 2,
-        title: 'Deploy to staging',
-        status: TaskStatus.IN_PROGRESS,
-        date: '',
-      },
-      {
-        id: 3,
-        title: 'Deploy to production',
-        status: TaskStatus.PENDING,
-        date: '',
-      },
-    ],
-  },
-}
+import FeatureImages from './feature-images'
 
 export default async function Page() {
   return (
@@ -99,27 +40,11 @@ export default async function Page() {
         </Link>
       </div>
 
-      <span className='p-4'>
-        <div className='container border max-w-4xl mx-auto overflow-hidden rounded mb-20 h-[70vh] pointer-events-none'>
-          <SidebarProvider>
-            <AppSidebar
-              className='data-[slot=sidebar-container]:relative data-[slot=sidebar-container]:max-h-[70vh]'
-              // @ts-expect-error using dummy data
-              project={DATA.project}
-              user={DATA.user}
-            />
-            <SidebarInset>
-              <Header>
-                {/* @ts-expect-error using dummy data */}
-                <BreadcrumbsHeader board={DATA.board} />
-              </Header>
-              <div className='container mx-auto p-4'>
-                <TasksTable tasks={DATA.board.tasks} />
-              </div>
-            </SidebarInset>
-          </SidebarProvider>
+      <div className='container p-4 max-w-5xl mx-auto'>
+        <div className='border rounded'>
+          <FeatureImages />
         </div>
-      </span>
+      </div>
 
       <p className='p-4 text-center text-secondary-foreground'>
         &copy; {new Date().getFullYear()} AJWAIN
