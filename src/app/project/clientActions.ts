@@ -1,3 +1,33 @@
+export async function getProjectDetails() {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + '/api/projects/details',
+      {
+        method: 'GET',
+        credentials: 'include',
+      },
+    )
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getUserDetails() {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + '/api/users/details',
+      {
+        method: 'GET',
+        credentials: 'include',
+      },
+    )
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function logout() {
   try {
     const response = await fetch(

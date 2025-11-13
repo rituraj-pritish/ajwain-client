@@ -99,7 +99,7 @@ export default function Task() {
 
   return (
     <Sheet open={!!taskId} onOpenChange={handleOpenChange}>
-      <form id='create-task'>
+      <form id='update-task'>
         <SheetContent side='bottom'>
           <SheetHeader className='flex-row justify-between'>
             <SheetTitle>{details?.title}</SheetTitle>
@@ -122,7 +122,7 @@ export default function Task() {
           <SheetFooter className='flex-row justify-end'>
             <Button
               type='submit'
-              id='create-task'
+              id='update-task'
               onClick={form.handleSubmit(handleSubmit)}
               disabled={form.formState.isSubmitting || !form.formState.isDirty}
             >

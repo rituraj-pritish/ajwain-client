@@ -12,14 +12,54 @@ import { NavUser } from './nav-user'
 import NavSecondary from './nav-secondary'
 import { Separator } from '@/components/ui/separator'
 import Loading from './loading'
+import { useEffect, useState } from 'react'
+import { getProjectDetails, getUserDetails } from '../../clientActions'
 
 interface Props {
   className?: string
-  project: Project
-  user: User
 }
 
-export default function AppSidebar({ className, project, user }: Props) {
+export default function AppSidebar({ className }: Props) {
+  const [details, setDetails] = useState<{
+    project: Project | null
+    user: User | null
+  }>({
+    project: null,
+    user: null,
+  })
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getDetails = async () => {
+    const projectResponse = await getProjectDetails()
+    const projectDetails = await projectResponse.json()
+
+    const userResponse = await getUserDetails()
+    const userDetails = await userResponse.json()
+
+    setDetails({
+      project: projectDetails,
+      user: userDetails,
+    })
+  }
+
+  const refetchProjectDetails = async () => {
+    setIsLoading(true)
+    const projectResponse = await getProjectDetails()
+    const projectDetails = await projectResponse.json()
+
+    setDetails((prevDetails) => ({
+      ...prevDetails,
+      project: projectDetails,
+    }))
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    getDetails()
+  }, [])
+
+  const { project, user } = details
+
   if (!project || !user) return <Loading />
 
   return (
@@ -42,7 +82,11 @@ export default function AppSidebar({ className, project, user }: Props) {
       </SidebarHeader>
       <Separator />
       <SidebarContent>
-        <NavWorkspaces workspaces={project.workspaces} />
+        <NavWorkspaces
+          isLoading={isLoading}
+          workspaces={project.workspaces}
+          refreshData={refetchProjectDetails}
+        />
         <NavSecondary />
       </SidebarContent>
       <Separator />

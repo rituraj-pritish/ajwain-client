@@ -11,34 +11,41 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
-import { useRouter } from 'next/navigation'
 import { Item } from './nav-workspaces'
 import { deleteWorkspace } from '../../clientActions'
+import { useParams, useRouter } from 'next/navigation'
 
 interface Props {
   workspace: Item | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
+  refreshData: () => void
 }
 
 export default function DeleteWorkspaceAlertDialog({
   workspace,
   isOpen,
   onOpenChange,
+  refreshData,
 }: Props) {
+  const { workspaceId } = useParams()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   if (!workspace) return null
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
     setIsLoading(true)
     try {
       await deleteWorkspace({
         id: workspace.id,
       })
+
+      if (Number(workspaceId) === workspace.id) router.replace('/project')
       onOpenChange(false)
-      router.refresh()
+      refreshData()
     } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {

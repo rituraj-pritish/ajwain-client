@@ -11,32 +11,38 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
-import { useRouter } from 'next/navigation'
 import { SubItem } from './nav-workspaces'
 import { deleteBoard } from '../../clientActions'
+import { useParams, useRouter } from 'next/navigation'
 
 interface Props {
   board: SubItem | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
+  refreshData: () => void
 }
 
 export default function DeleteBoardAlertDialog({
   board,
   isOpen,
   onOpenChange,
+  refreshData,
 }: Props) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const { boardId } = useParams()
 
   if (!board) return null
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
     setIsLoading(true)
     try {
       await deleteBoard(board.id)
+      if (Number(boardId) === board.id) router.replace('/project')
       onOpenChange(false)
-      router.refresh()
+      refreshData()
     } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {

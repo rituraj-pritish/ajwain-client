@@ -1,6 +1,7 @@
 describe('workspace flows', () => {
   before(() => {
     cy.login('email@email.com', 'password')
+    cy.wait(1000)
   })
 
   it('creates a workspace', () => {
@@ -19,7 +20,9 @@ describe('workspace flows', () => {
   })
 
   it('redirects to board', () => {
-    cy.contains('[data-testid="nav-workspace-collapsible"]', 'Frontend').click()
+    cy.contains('[data-testid="nav-workspace-collapsible"]', 'Frontend')
+      .get('[data-testid="nav-workspace-collapsible-trigger"]')
+      .click()
     cy.get('[data-testid="nav-board-link"]')
       .contains('span', 'Frontend board')
       .click()

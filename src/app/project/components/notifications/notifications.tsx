@@ -14,26 +14,30 @@ import NotificationItems from './notification-items'
 import Notification, {
   NotificationStatus,
 } from '@/types/notification.interface'
-
-const getNotifications = async (setState: (data: Notification[]) => void) => {
-  const res = await fetch('/api/notifications', {
-    method: 'GET',
-    credentials: 'include',
-  })
-  const data = await res.json()
-  setState(data)
-}
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState<Notification[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getNotifications = async () => {
+    const res = await fetch('/api/notifications', {
+      method: 'GET',
+      credentials: 'include',
+    })
+    const data = await res.json()
+
+    setNotifications(data)
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    getNotifications(setNotifications)
+    getNotifications()
 
     const eventSource = new EventSource('/api/notifications/stream')
 
     eventSource.onmessage = ({ data }) => {
-      setNotifications((prevData) => [data, ...prevData])
+      setNotifications((prevData) => [JSON.parse(data), ...prevData])
     }
 
     return () => {
@@ -47,6 +51,8 @@ export default function Notifications() {
   const archivedNotifications = notifications.filter(
     ({ status }) => status === NotificationStatus.ARCHIVED,
   )
+
+  if (isLoading) return <Skeleton className='h-9 w-9' />
 
   return (
     <Popover>
@@ -68,10 +74,10 @@ export default function Notifications() {
               <TabsTrigger value='archived'>Archived</TabsTrigger>
             </TabsList>
           </span>
-          <TabsContent value='unread'>
+          <TabsContent className='overflow-auto' value='unread'>
             <NotificationItems items={unreadNotifications} />
           </TabsContent>
-          <TabsContent value='archived'>
+          <TabsContent className='overflow-auto' value='archived'>
             <NotificationItems items={archivedNotifications} />
           </TabsContent>
         </Tabs>

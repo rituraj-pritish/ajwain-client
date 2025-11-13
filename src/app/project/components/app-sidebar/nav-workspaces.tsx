@@ -32,13 +32,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import DeleteWorkspaceAlertDialog from './delete-workspace-alert-dialog'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import AddAndRenameBoard from './add-and-rename-board'
 import DeleteBoardAlertDialog from './delete-board-alert-dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface Props {
+  isLoading: boolean
   workspaces: Workspace[]
+  refreshData: () => void
 }
 
 export type SubItem = Omit<Item, 'items'>
@@ -60,7 +63,12 @@ export enum OPEN_TYPES {
   DELETE_BOARD = 'DELTE_BOARD',
 }
 
-export default function NavWorkspaces({ workspaces }: Props) {
+export default function NavWorkspaces({
+  isLoading,
+  workspaces,
+  refreshData,
+}: Props) {
+  const router = useRouter()
   const [openType, setOpenType] = useState<OPEN_TYPES | null>(null)
   const [selectedWorkspace, setSelectedWorkspace] = useState<Item | null>(null)
   const [selectedBoard, setSelectedBoard] = useState<SubItem | null>(null)
@@ -71,7 +79,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
     id,
     name,
     url: `/project/workspace/${id}`,
-    isActive: pathName === `/project/workspace/${id}`,
+    isActive: pathName.includes(`/project/workspace/${id}`),
     items: boards.map((board) => ({
       id: board.id,
       name: board.name,
@@ -79,6 +87,16 @@ export default function NavWorkspaces({ workspaces }: Props) {
       isActive: pathName === `/project/workspace/${id}/board/${board.id}`,
     })),
   }))
+
+  if (isLoading)
+    return (
+      <SidebarGroup className='gap-2'>
+        <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
+        <Skeleton className='h-8 w-full' />
+        <Skeleton className='h-8 w-full' />
+        <Skeleton className='h-8 w-full' />
+      </SidebarGroup>
+    )
 
   return (
     <>
@@ -107,15 +125,13 @@ export default function NavWorkspaces({ workspaces }: Props) {
               data-testid='nav-workspace-collapsible'
             >
               <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.name}
-                    isActive={item.isActive}
-                  >
-                    <span>{item.name}</span>
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.name}
+                  isActive={item.isActive}
+                >
+                  <span>{item.name}</span>
+                </SidebarMenuButton>
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     asChild
@@ -159,9 +175,14 @@ export default function NavWorkspaces({ workspaces }: Props) {
 
                 {item.items?.length ? (
                   <>
-                    <SidebarMenuAction>
-                      <ChevronRight className='group-data-[state=open]/collapsible:rotate-90' />
-                      <span className='sr-only'>Toggle</span>
+                    <SidebarMenuAction
+                      asChild
+                      data-testid='nav-workspace-collapsible-trigger'
+                    >
+                      <CollapsibleTrigger>
+                        <ChevronRight className='group-data-[state=open]/collapsible:rotate-90' />
+                        <span className='sr-only'>Toggle</span>
+                      </CollapsibleTrigger>
                     </SidebarMenuAction>
                     <CollapsibleContent>
                       <SidebarMenuSub>
@@ -175,7 +196,13 @@ export default function NavWorkspaces({ workspaces }: Props) {
                                 href={subItem.url}
                                 data-testid='nav-board-link'
                               >
-                                <span>{subItem.name}</span>
+                                <span
+                                  className={
+                                    subItem.isActive ? 'font-semibold' : ''
+                                  }
+                                >
+                                  {subItem.name}
+                                </span>
                               </Link>
                             </SidebarMenuSubButton>
                             <DropdownMenu>
@@ -190,6 +217,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
                               <DropdownMenuContent side='right' align='start'>
                                 <DropdownMenuItem
                                   onClick={() => {
+                                    setSelectedWorkspace(item)
                                     setSelectedBoard(subItem)
                                     setOpenType(OPEN_TYPES.RENAME_BOARD)
                                   }}
@@ -235,6 +263,10 @@ export default function NavWorkspaces({ workspaces }: Props) {
           setOpenType(null)
           setSelectedWorkspace(null)
         }}
+        refreshData={() => {
+          router.refresh()
+          refreshData()
+        }}
       />
       <DeleteWorkspaceAlertDialog
         workspace={selectedWorkspace}
@@ -243,6 +275,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
           setOpenType(null)
           setSelectedWorkspace(null)
         }}
+        refreshData={refreshData}
       />
 
       <AddAndRenameBoard
@@ -259,6 +292,10 @@ export default function NavWorkspaces({ workspaces }: Props) {
           setSelectedWorkspace(null)
           setSelectedBoard(null)
         }}
+        refreshData={() => {
+          router.refresh()
+          refreshData()
+        }}
       />
       <DeleteBoardAlertDialog
         board={selectedBoard}
@@ -267,6 +304,7 @@ export default function NavWorkspaces({ workspaces }: Props) {
           setOpenType(null)
           setSelectedBoard(null)
         }}
+        refreshData={refreshData}
       />
     </>
   )

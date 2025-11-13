@@ -19,7 +19,6 @@ import { Controller, useForm } from 'react-hook-form'
 import z from 'zod'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/ui/spinner'
-import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Item, SubItem } from './nav-workspaces'
 import { createBoard, updateBoard } from '../../clientActions'
@@ -29,6 +28,7 @@ interface Props {
   board: SubItem | null
   isOpen: boolean
   onOpenChange: (state: boolean) => void
+  refreshData: () => void
 }
 
 const schema = z.object({
@@ -40,8 +40,8 @@ export default function AddAndRenameBoard({
   board,
   isOpen,
   onOpenChange,
+  refreshData,
 }: Props) {
-  const router = useRouter()
   const form = useForm({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
@@ -65,7 +65,7 @@ export default function AddAndRenameBoard({
       const data = await response.json()
 
       if (!response.ok && data.error) throw data
-      router.refresh()
+      refreshData()
       onOpenChange(false)
       toast.success(
         `${values.name} ${board ? 'updated' : 'created'} successfully.`,
