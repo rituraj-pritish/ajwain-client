@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/select'
 import { createMember } from '../clientActions'
 import useGlobalData from '../../useGlobalData'
+import usePermissions from '../../usePermissions'
 
 export const schema = z.object({
   name: z.string().min(4, 'Name must me greater than 3 characters long'),
@@ -42,6 +43,7 @@ export const schema = z.object({
 })
 
 export default function AddMember() {
+  const { canAddMember } = usePermissions()
   const { users, updateData } = useGlobalData()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -80,11 +82,15 @@ export default function AddMember() {
     setIsOpen(state)
   }
 
+  if (!canAddMember) return null
+
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-      <SheetTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button>Add Member</Button>
-      </SheetTrigger>
+      <div className='mb-4 flex justify-end'>
+        <SheetTrigger onClick={() => setIsOpen(true)} asChild>
+          <Button>Add Member</Button>
+        </SheetTrigger>
+      </div>
       <form id='create-member'>
         <SheetContent side='bottom'>
           <SheetHeader>

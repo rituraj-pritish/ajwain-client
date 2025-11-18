@@ -2,6 +2,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import AppSidebar from './components/app-sidebar/app-sidebar'
 import { getProjectDetails } from './actions'
 import { GlobalDataContextProvider } from './useGlobalData'
+import { PermissionsContextProvider } from './usePermissions'
 
 export async function generateMetadata() {
   const projectResponse = await getProjectDetails()
@@ -15,9 +16,11 @@ export async function generateMetadata() {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
       <GlobalDataContextProvider>
-        <SidebarInset>{children}</SidebarInset>
+        <PermissionsContextProvider>
+          <AppSidebar />
+          <SidebarInset>{children}</SidebarInset>
+        </PermissionsContextProvider>
       </GlobalDataContextProvider>
     </SidebarProvider>
   )

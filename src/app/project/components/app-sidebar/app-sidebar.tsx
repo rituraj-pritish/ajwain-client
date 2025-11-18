@@ -14,6 +14,7 @@ import { Separator } from '@/components/ui/separator'
 import Loading from './loading'
 import { useEffect, useState } from 'react'
 import { getProjectDetails, getUserDetails } from '../../clientActions'
+import useGlobalData from '../../useGlobalData'
 
 interface Props {
   className?: string
@@ -27,14 +28,16 @@ export default function AppSidebar({ className }: Props) {
     project: null,
     user: null,
   })
+  const { updateData } = useGlobalData()
   const [isLoading, setIsLoading] = useState(false)
 
   const getDetails = async () => {
-    const projectResponse = await getProjectDetails()
-    const projectDetails = await projectResponse.json()
-
     const userResponse = await getUserDetails()
     const userDetails = await userResponse.json()
+    updateData('user', userDetails)
+
+    const projectResponse = await getProjectDetails()
+    const projectDetails = await projectResponse.json()
 
     setDetails({
       project: projectDetails,

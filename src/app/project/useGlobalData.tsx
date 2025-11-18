@@ -16,6 +16,7 @@ interface Action {
 }
 
 interface State {
+  user: User | null
   users: User[]
 }
 
@@ -31,9 +32,11 @@ function globalDataReducer(state: State, action: Action) {
 }
 
 const GlobalDataContext = createContext<{
+  user: User | null
   users: User[]
   updateData: (property: string, value: unknown) => void
 }>({
+  user: null,
   users: [],
   updateData: () => {},
 })
@@ -44,6 +47,7 @@ export const GlobalDataContextProvider = ({
   children: React.ReactNode
 }) => {
   const [state, dispatch] = useReducer(globalDataReducer, {
+    user: null,
     users: [],
   })
 

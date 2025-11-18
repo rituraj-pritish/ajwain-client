@@ -84,7 +84,7 @@ export async function getComments(id: string) {
   })
 }
 
-export async function createComment(body: { taskId: number, content: string,  }) {
+export async function createComment(body: { taskId: number; content: string }) {
   return fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/comments/create', {
     method: 'POST',
     headers: {
