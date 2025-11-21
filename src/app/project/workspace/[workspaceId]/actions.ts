@@ -13,7 +13,10 @@ export async function createTask(body: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      ...body,
+      membersIds: body.memberIds?.split(',').map((id) => Number(id)),
+    }),
   })
 }
 
@@ -30,7 +33,10 @@ export async function updateTask(body: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      ...body,
+      membersIds: body.memberIds?.split(',').map((id) => Number(id)),
+    }),
   })
 }
 
